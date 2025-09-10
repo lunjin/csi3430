@@ -1,0 +1,225 @@
+%\documentclass[notes=show]{beamer}
+\documentclass[notes=none]{beamer}
+
+\usepackage{tikz}
+\usepackage[linguistics]{forest}
+\usepackage[many]{tcolorbox}
+\usepackage{comment}
+\usepackage{multicol}
+\usepackage{listings}
+
+\newif\ifframeinlbf
+\frameinlbftrue
+\makeatletter
+\newcommand\listofframes{\@starttoc{lbf}}
+\makeatother
+
+\addtobeamertemplate{frametitle}{}{%
+    \ifframeinlbf%
+         \addtocontents{lbf}{%
+            \protect\makebox[2em][l]{%
+                \protect\usebeamercolor[fg]{structure}\insertframenumber\hfill%
+            }%
+            \protect\hyperlink{page.\insertpagenumber}\insertframetitle\par%
+        }%
+   \else\fi%
+}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\newcommand{\myalert}[2]{%
+    \tikz\node[coordinate](t#1){};\alert<#1>{#2}
+}
+
+
+\newcommand{\myexplain}[3]
+{\begin{tcolorbox}
+    [   tikznode boxed title,
+        enhanced,
+        arc=0mm,
+        interior style={white},
+        attach boxed title to top center= {yshift=-\tcboxedtitleheight/2},
+        fonttitle=\bfseries,
+        colbacktitle=white,coltitle=red,
+        boxed title style={size=small,colframe=red,boxrule=0pt},
+        title={\tikz\node[coordinate](s#1) {};#2}]
+#3
+\end{tcolorbox}
+\begin{tikzpicture}[overlay]
+\path<#1>[->, thick] (s#1) edge [bend left] (t#1);
+\end{tikzpicture}
+}
+
+\newcommand{\explain}[2]
+{\begin{tcolorbox}
+    [   tikznode boxed title,
+        enhanced,
+        arc=0mm,
+        interior style={white},
+        attach boxed title to top center= {yshift=-\tcboxedtitleheight/2},
+        fonttitle=\bfseries,
+        colbacktitle=white,coltitle=red,
+        boxed title style={size=small,colframe=red,boxrule=0pt},
+        title={#1}]
+#2
+\end{tcolorbox}
+}
+
+\def\point{\begin{tikzpicture}
+\fill[orange] (0,0) circle (2pt);
+\end{tikzpicture}}
+
+\setbeamertemplate{navigation symbols}{} %Remove navigation bar
+
+\tikzstyle{every picture}+=[remember picture]
+
+\usepackage{color}
+\newcommand{\vet}[1]{\foreach \num in {#1}{\el{\num}}}
+\newcommand{\el}[1]{\fbox{\parbox[c][2ex][c]{1.1em}{#1}}}
+\newcommand{\id}[1]{\parbox[r][2ex][b]{1.7em}{\raggedleft #1}}
+\newcommand{\bl}{\color{blue}}
+\newcommand{\gr}{\color{gray}}
+\newcommand{\re}{\color{red}}
+
+\title{Languages}
+\author{Lunjin Lu}
+\date{}
+
+
+\begin{document}
+\begin{comment}
+\end{comment}
+\frameinlbffalse
+\begin{frame}[fragile,t,allowframebreaks]{List of Frames}
+    \listofframes
+\end{frame}
+\frameinlbftrue
+
+
+\frame{ \titlepage
+}
+
+\begin{frame}{Languages}
+\begin{itemize}
+  \item There are numerous languages - natural languages, programming languages, ...
+  \item Natural languages - English, French, Chinese, Japanese, ...
+  \item Programming languages - Java, C++, Prolog, F\#, ...
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Language Examples}
+    \begin{itemize}
+    \item The English language is the set of all English sentences composed of English words and punctuation marks.  Its alphabet is the set of English words and punctuation marks.
+    \item The Java language is the set of all valid Java programs. Its alphabet contains keywords, operators, identifiers, integers, ...
+    \end{itemize}
+    Members of the alphabet of a language are  called called \textit{symbols}; and members of the language are called \textit{strings}.
+\end{frame}
+
+\begin{frame}{Strings}
+A string over an alphabet $\Sigma$ is a sequence of symbols from $\Sigma$. The empty string is denoted $\Lambda$.
+
+
+
+Let $\Sigma = \{0,1\}$. The following are example strings over $\Sigma$ include
+\begin{itemize}
+    \item $\Lambda$
+    \item 0
+    \item 1
+    \item 100
+    \item 10000
+\end{itemize}
+
+The length of a string $w$, denoted $|w|$ is defined as the number of symbols occurrences in $w$. For instance, $|\Lambda|=0$ and $|010|=3$.
+\end{frame}
+
+
+\begin{frame}{What is a Language?}
+    A language $L$  is a set of strings over a given alphabet $\Sigma$.
+    \begin{itemize}
+    \item [Ex 1.] $\Sigma_1=\{0,1\}$; $L_1=\{\mbox{All strings of 0's and 1's such that if a string starts with 0 then its length is 1}\}$.
+    \item [Ex 2.] $\Sigma_2=\{a\}$; $L_2=\{\mbox{all strings of a's whose lengths are odd}\}$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{String Reversal}
+    The reversal of a string $w$, denoted $w^{-1}$,  is the string resulting from the arrangement of  the symbols in $w$ in reverse order. If $w=a_{1}a_{2}...a_{n-1}a_{n}$, then its reversal $w^{-1}=a_{n}a_{n-1}...a_{2}a_{1}$.
+    \begin{itemize}
+    \item $\Lambda^{-1}=\Lambda$
+    \item $0^{-1}=0$
+    \item $(abc)^{-1}=cba$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{String Concatenation}
+    The concatenation of two strings $x$ and $y$, written as  $x\cdot y$ (or simply $xy$) is a string formed of symbols from $x$ followed by symbols from $y$ in order. If $x=a_{1}a_{2}...a_{m}$ and $y=b_1b_2\cdots b_n$ then $x\cdot y=a_1a_2...a_mb_1b_2...b_n$.
+    \begin{itemize}
+    \item $\Lambda\cdot x=x$ and $x\cdot\Lambda=x$ for any string $x$.
+    \item $|x\cdot y| = |x|+|y|$.
+    \item $101\cdot 001=101001$.
+    \item $001\cdot 101=001101$.
+\end{itemize}
+$\Lambda$ is the identity for concatenation and concatenation is not commutative.
+\end{frame}
+
+\begin{frame}{Concatenation of two languages}
+Let $L_1$ and $L_2$ be two languages. The concatenation of $L_1$ and $L_2$ is defined
+\[ L_1L_2 = \{w_1\cdot w_2 \mid w_1\in L_1\wedge w_2\in L_2\}
+\]
+
+Let $L_1=\{a,ab,abb\}$ and $L_2=\{c,cd\}$. Then
+\[ L_1L_2 = \{ac,abc,abbc,acd,abcd,abbcd\}
+\]
+\end{frame}
+
+\begin{frame}{Kleene Closure of a Language}
+
+The Kleene closure of a language $L$, denoted $L^*$, is the languages whose elements are concatenations of strings from $L$.
+
+\[ L^* = \{w_1\cdots w_n \mid n\geq 0 \wedge \forall 1\leq i\leq n. w_i\in L\}
+\]
+
+
+Let $L_1=\{1,10\}$. Then $L_1^{*} = \{\Lambda, 1, 10, 11, 110,1010, \cdots \}$.
+
+Let $L_2=\{0,1\}$. Then $L_2^*=\{\mbox{Strings of 0's and 1's}\}$.
+
+Note that $\Lambda \in L^*$ for any language $L$ and $L^*$ is infinite if $L\neq \emptyset$ and $L\neq \{\Lambda\}$.
+
+\end{frame}
+
+\begin{frame}{Proof by Contradiction} 
+Proof by contradiction is one of common proof methods. It works as follows.
+ 
+In order to prove a property P, 
+\begin{itemize} 
+\item first assume that P does not hold, and then, 
+\item show that this assumption leads to contradiction.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Prove that $\sqrt{2}$ is not a rational number}
+Proof. Assume that $\sqrt{2}$ is a rational number. There are two integers 
+ 	   $p$ and $q$ such that $\sqrt{2}=p/q$ and $p$ and $q$ do not have 
+ 	   common divisors other than 1. There are prime number $p_1,p_2\cdots p_m$ such that $p=p_1p_2\cdots p_m$ and 
+ 	   $p_1\leq p_2\leq\cdots\leq p_m$,  and    prime number $q_1,q_2\cdots q_n$ such that $q=q_1q_2\cdots q_n$ and 
+ 	   $q_1\leq q_2\leq\cdots\leq q_n$. 
+ 	   
+ 	   We have $\sqrt{2} = \frac{p_1p_2\cdots p_m}{q_1q_2\cdots q_n}$ which is equivalent to 
+ 	   $\sqrt{2}{q_1q_2\cdots q_n} = {p_1p_2\cdots p_m}$ 
+ 	   Multiply each side by itself, we obtain 
+ 	   $2{q_1^2q_2^2\cdots q_n^}={p_1^2p_2^2\cdots p_m^2}$. Both sides are products of prime numbers in ascending order. 
+ 	   Therefore, $p_1=2$ and hence 
+ 	   ${q_1^2q_2^2\cdots q_n^}=2p_2^2\cdots p_m^2$. Both sides are again products of prime numbers in ascending order 
+ 	   and hence $q_1=2$. Thus 2 is a common divisor of $p$ and $q$, which contradicts with that $p$ and $q$ do not have common divisor other than 1. Therefore, the assumption is incorrect and hence $\sqrt{2}$ is not a rational number.
+\end{frame}
+
+\end{document}

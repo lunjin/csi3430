@@ -1,0 +1,673 @@
+%\documentclass[notes=show]{beamer}
+\documentclass[notes=none]{beamer}
+
+\usepackage{tikz}
+\usepackage[linguistics]{forest}
+\usepackage[many]{tcolorbox}
+\usepackage{comment}
+\usepackage{multicol}
+\usepackage{listings}
+
+\newif\ifframeinlbf
+\frameinlbftrue
+\makeatletter
+\newcommand\listofframes{\@starttoc{lbf}}
+\makeatother
+
+\addtobeamertemplate{frametitle}{}{%
+    \ifframeinlbf%
+         \addtocontents{lbf}{%
+            \protect\makebox[2em][l]{%
+                \protect\usebeamercolor[fg]{structure}\insertframenumber\hfill%
+            }%
+            \protect\hyperlink{page.\insertpagenumber}\insertframetitle\par%
+        }%
+   \else\fi%
+}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\newcommand{\myalert}[2]{%
+    \tikz\node[coordinate](t#1){};\alert<#1>{#2}
+}
+
+
+\newcommand{\myexplain}[3]
+{\begin{tcolorbox}
+    [   tikznode boxed title,
+        enhanced,
+        arc=0mm,
+        interior style={white},
+        attach boxed title to top center= {yshift=-\tcboxedtitleheight/2},
+        fonttitle=\bfseries,
+        colbacktitle=white,coltitle=red,
+        boxed title style={size=small,colframe=red,boxrule=0pt},
+        title={\tikz\node[coordinate](s#1) {};#2}]
+#3
+\end{tcolorbox}
+\begin{tikzpicture}[overlay]
+\path<#1>[->, thick] (s#1) edge [bend left] (t#1);
+\end{tikzpicture}
+}
+
+\newcommand{\explain}[2]
+{\begin{tcolorbox}
+    [   tikznode boxed title,
+        enhanced,
+        arc=0mm,
+        interior style={white},
+        attach boxed title to top center= {yshift=-\tcboxedtitleheight/2},
+        fonttitle=\bfseries,
+        colbacktitle=white,coltitle=red,
+        boxed title style={size=small,colframe=red,boxrule=0pt},
+        title={#1}]
+#2
+\end{tcolorbox}
+}
+
+\def\point{\begin{tikzpicture}
+\fill[orange] (0,0) circle (2pt);
+\end{tikzpicture}}
+
+\setbeamertemplate{navigation symbols}{} %Remove navigation bar
+
+\tikzstyle{every picture}+=[remember picture]
+
+\usepackage{color}
+\newcommand{\vet}[1]{\foreach \num in {#1}{\el{\num}}}
+\newcommand{\el}[1]{\fbox{\parbox[c][2ex][c]{1.1em}{#1}}}
+\newcommand{\id}[1]{\parbox[r][2ex][b]{1.7em}{\raggedleft #1}}
+\newcommand{\bl}{\color{blue}}
+\newcommand{\gr}{\color{gray}}
+\newcommand{\re}{\color{red}}
+
+\title{Languages}
+\author{Lunjin Lu}
+\date{}
+
+
+\begin{document}
+\begin{comment}
+\end{comment}
+\frameinlbffalse
+\begin{frame}[fragile,t,allowframebreaks]{List of Frames}
+    \listofframes
+\end{frame}
+\frameinlbftrue
+
+
+\frame{ \titlepage
+}
+
+\begin{frame}{Languages}
+\begin{itemize}
+  \item There are numerous languages - natural languages, programming languages, ...
+  \item Natural languages - English, French, Chinese, Japanese, ...
+  \item Programming languages - Java, C++, Prolog, F\#, ...
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Language Examples}
+    \begin{itemize}
+    \item The English language is the set of all English sentences composed of English words and punctuation marks.  Its alphabet is the set of English words and punctuation marks.
+    \item The Java language is the set of all valid Java programs. Its alphabet contains keywords, operators, identifiers, integers, ...
+    \end{itemize}
+    Members of the alphabet of a language are  called called \textit{symbols}; and members of the language are called \textit{strings}.
+\end{frame}
+
+\begin{frame}{Strings}
+A string over an alphabet $\Sigma$ is a sequence of symbols from $\Sigma$. The empty string is denoted $\Lambda$.
+
+
+
+Let $\Sigma = \{0,1\}$. The following are example strings over $\Sigma$ include
+\begin{itemize}
+    \item $\Lambda$
+    \item 0
+    \item 1
+    \item 100
+    \item 10000
+\end{itemize}
+
+The length of a string $w$, denoted $|w|$ is defined as the number of symbols occurrences in $w$. For instance, $|\Lambda|=0$ and $|010|=3$.
+\end{frame}
+
+
+\begin{frame}{What is a Language?}
+    A language $L$  is a set of strings over a given alphabet $\Sigma$.
+    \begin{itemize}
+    \item [Ex 1.] $\Sigma_1=\{0,1\}$; $L_1=\{\mbox{All strings of 0's and 1's such that if a string starts with 0 then its length is 1}\}$.
+    \item [Ex 2.] $\Sigma_2=\{a\}$; $L_2=\{\mbox{all strings of a's whose lengths are odd}\}$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{String Reversal}
+    The reversal of a string $w$, denoted $w^{-1}$,  is the string resulting from the arrangement of  the symbols in $w$ in reverse order. If $w=a_{1}a_{2}...a_{n-1}a_{n}$, then its reversal $w^{-1}=a_{n}a_{n-1}...a_{2}a_{1}$.
+    \begin{itemize}
+    \item $\Lambda^{-1}=\Lambda$
+    \item $0^{-1}=0$
+    \item $(abc)^{-1}=cba$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{String Concatenation}
+    The concatenation of two strings $x$ and $y$, written as  $x\cdot y$ (or simply $xy$) is a string formed of symbols from $x$ followed by symbols from $y$ in order. If $x=a_{1}a_{2}...a_{m}$ and $y=b_1b_2\cdots b_n$ then $x\cdot y=a_1a_2...a_mb_1b_2...b_n$.
+    \begin{itemize}
+    \item $\Lambda\cdot x=x$ and $x\cdot\Lambda=x$ for any string $x$.
+    \item $|x\cdot y| = |x|+|y|$.
+    \item $101\cdot 001=101001$.
+    \item $001\cdot 101=001101$.
+\end{itemize}
+$\Lambda$ is the identity for concatenation and concatenation is not commutative.
+\end{frame}
+
+\begin{frame}{Concatenation of two languages}
+Let $L_1$ and $L_2$ be two languages. The concatenation of $L_1$ and $L_2$ is defined 
+\[ L_1L_2 = \{w_1\cdot w_2 \mid w_1\in L_1\wedge w_2\in L_2\}
+\]
+
+Let $L_1=\{a,ab,abb\}$ and $L_2=\{c,cd\}$. Then 
+\[ L_1L_2 = \{ac,abc,abbc,acd,abcd,abbcd\}
+\]
+\end{frame}
+
+\begin{frame}{Kleene Closure of a Language} 
+
+The Kleene closure of a language $L$, denoted $L^*$, is the languages whose elements are concatenations of strings from $L$. 
+
+\[ L^* = \{w_1\cdots w_n \mid n\geq 0 \wedge \forall 1\leq i\leq n. w_i\in L\}
+\]
+
+
+Let $L_1=\{1,10\}$. Then $L_1^{*} = \{\Lambda, 1, 10, 11, 110,1010, \cdots \}$.
+
+Let $L_2=\{0,1\}$. Then $L_2^*=\{\mbox{Strings of 0's and 1's}\}$. 
+
+Note that $\Lambda \in L^*$ for any language $L$ and $L^*$ is infinite if $L\neq \emptyset$ and $L\neq \{\Lambda\}$.
+
+\end{frame}
+\end{document}
+
+\def\scores
+{
+1/0,
+2/1,
+3/4
+}
+
+\vet{0, 1, 4, 9,16,25,36,49,64,81}
+
+\foreach \x/\y in \scores {\el{\temporal<\x>{??}{\re \y}{\bl \y}}}
+
+
+\begin{frame}{Modular Programming}
+\begin{itemize}
+    \item A monolithic code is complex.
+    \begin{itemize}
+        \item hard to understand
+        \item hard to debug
+        \item hard to maintain
+    \end{itemize}
+    \item Modular programming breaks the program up into components.
+    \begin{itemize}
+        \item Functions, classes, modules and headers are example components.
+        \item Simplifies programming activities
+        \item Avoids duplicates by re-using components
+    \end{itemize}
+    \item A function is a collections of statements to perform a task.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Function Definition}
+\begin{small}
+\begin{semiverbatim}
+\myalert{1}{int} \myalert{2}{max3}\myalert{3}{(}\myalert{4}{int a}, int b, int c\alert<3>{)}
+\myalert{5}{\{   int max;
+
+    if ( a > b )
+      if ( a >= c ) max = a; else max = c;
+    else
+      if ( b >= c) max = b; else  max = c;
+
+  return max;
+\}}
+\end{semiverbatim}
+\end{small}
+\begin{overlayarea}{\textwidth}{3cm}
+\only<1>{\myexplain{1}{Return Type}{A function definition begins with the return type of the function. This function returns a value of type \text{int}. The return type of a function that does not return a value is \textit{void}.}}
+\only<2>{\myexplain{2}{Function Name}{Each function has a name which is an identifier. The function is named max3.}}
+\only<3>{\myexplain{3}{Parameter List}{A function can take 0, 1 or more parameters. The behavior of the function is modified by its parameters. The parameter list is a list of parameter declarations. The Max3 function has takes parameters. }}
+\only<4>{\myexplain{4}{Parameter Declaration}{This parameter declaration says that the first parameter is named \textit{a} and is of type \textit{int}. }}
+\only<5>{\myexplain{5}{Function Body}{The body of a function starts with a $\{$ and ends with a $\}$. \textit{max} is a local variable. }}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[fragile]{Function Call}
+
+\begin{semiverbatim}
+int max3(int \tikz[baseline]\node[rectangle,color=blue,anchor=base](q1){a};, int\tikz[baseline]\node[rectangle,color=blue,anchor=base](q2){b};, int \tikz[baseline]\node[rectangle,color=blue,anchor=base](q3){c};)
+\alert<3>{\{  int max;
+
+    if ( a > b )
+      if ( a >= c ) max = a; else max = c;
+    else
+      if ( b >= c) max = b; else  max = c;
+
+    return max;
+\}}
+\end{semiverbatim}
+\begin{semiverbatim}
+     \myalert{1}{max3(\tikz[baseline]\node[rectangle,draw=blue,anchor=base](p1){10}; , \tikz[baseline]\node[rectangle,draw=blue,anchor=base](p2){10+5}; ,\tikz[baseline]\node[rectangle,draw=blue,anchor=base](p3){35};)} + 1
+\end{semiverbatim}
+\begin{overlayarea}{\textwidth}{3cm}
+\only<1>{\myexplain{1}{Function call}{max3(10,10+5,35) is a function call. A function call is a function name followed by an argument list inside a pair of parentheses. The call has three arguments. The call is executed as follows.}}
+\only<2>{ \explain{Parameter Passing}{Each argument is evaluated and its value is assigned to its corresponding parameter. An argument is also called an actual parameter; and a parameter is also called a formal argument.}
+\begin{tikzpicture}[overlay]
+\draw [->] (p1.north) edge (q1.south);
+\draw [->] (p2.north) edge (q2.south);
+\draw [->] (p3.north) edge (q3.south);
+\end{tikzpicture}
+}
+\only<3>{\explain{Execution of Body}{The body of the function is then executed. It computes the maximum of a, b and c and places it in max. The body is ended with \textit{return max;} }
+}
+
+\only<4>{\explain{Returned value}{\small The return statement terminates the function and sends the value of max to the function that makes the call. The returned value is used in the place of the function call and the execution continues at the point immediately after the call.} }
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]{Example}
+\begin{lstlisting}[basicstyle=\tiny,escapeinside=@@]
+#include <iostream>
+
+void displayMessage()
+{
+   std::cout << "The program first asks for three integers, \n"
+             << "then computes their maximum and the minimum, \n"
+             << "and displays the maximum and the minimum."
+             << std::endl;
+}
+
+int max3(int a, int b, int c)
+{   int max;
+
+    if ( a > b )
+      if ( a >= c ) max = a; else max = c;
+    else
+      if ( b >= c) max = b; else  max = c;
+
+  return max;
+}
+
+int min3(int a, int b, int c)
+{
+  int min;
+
+  if ( a < b )
+      if ( a <= c ) min = a; else min = c;
+  else
+      if ( b <= c) min = b; else  min = c;
+
+  return min;
+}
+
+int main()
+{ using namespace std;
+
+  int n1, n2, n3, min, max;
+
+  displayMessage();
+
+  cout << "Enter three integers:  " ;
+  cin >> n1 >> n2 >> n3;
+
+  max = max3(n1,n2,n3);
+  min = min3(n1,n2,n3);
+
+  cout << "The maximum  = " << max << endl
+       << "The minumum = " << min << endl ;
+
+  return 0;
+}
+\end{lstlisting}
+\note[enumerate]{The return type of displayMessage is void. It is used in the function main as displayMessage(); }
+
+\note[enumerate]{ You can use the operator :: to use names in a namespace to avoid the \textbf{using} statement. Some programmers prefer using the operator instead of the statement. }
+\end{frame}
+
+
+\begin{frame}[fragile]{Function Prototype}
+\begin{lstlisting}[basicstyle=\tiny]
+#include <iostream>
+
+void displayMessage();
+int max3(int a, int b, int c);
+int min3(int a, int b, int c);
+
+int main()
+{ using namespace std;
+
+  int n1, n2, n3, min, max;
+
+  displayMessage();
+
+  cout << "Enter three integers:  " ;
+  cin >> n1 >> n2 >> n3;
+
+  max = max3(n1,n2,n3);
+  min = min3(n1,n2,n3);
+
+  cout << "The maximum  = " << max << endl
+       << "The minumum = " << min << endl ;
+
+  return 0;
+}
+
+void displayMessage() {...}
+
+int max3(int a, int b, int c) { ... }
+
+int min3(int a, int b, int c) {...}
+
+\end{lstlisting}
+\note[enumerate]{ int max3(int a, int b, int c); is called a function prototype. It declares the function max3 by specifying the return type, the name and the formal parameters of a function. You can omit the names of the formal parameters.  }
+
+\note[enumerate]{All functions must be defined or declared before they are called.}
+\end{frame}
+
+\begin{frame}[fragile]{Call/Pass by Value}
+\begin{semiverbatim}
+int max3(int \tikz[baseline]\node[rectangle,color=blue,anchor=base](q1){a};, int\tikz[baseline]\node[rectangle,color=blue,anchor=base](q2){b};, int \tikz[baseline]\node[rectangle,color=blue,anchor=base](q3){c};)
+\{  int max;
+
+    if ( a > b )
+      if ( a >= c ) max = a; else max = c;
+    else
+      if ( b >= c) max = b; else  max = c;
+
+    return max;
+\}
+\end{semiverbatim}
+\begin{semiverbatim}
+     max=max3(\tikz[baseline]\node[rectangle,draw=blue,anchor=base](p1){n1}; , \tikz[baseline]\node[rectangle,draw=blue,anchor=base](p2){n2}; ,\tikz[baseline]\node[rectangle,draw=blue,anchor=base](p3){n3};)
+\end{semiverbatim}
+
+\explain{Pass by Value}{Each argument is evaluated and its value is used to initialize. The value of n1 is used to initialize a. Afterwards, n1 and a are un-related.}
+
+\begin{tikzpicture}[overlay]
+\draw [->] (p1.north) edge (q1.south);
+\draw [->] (p2.north) edge (q2.south);
+\draw [->] (p3.north) edge (q3.south);
+\end{tikzpicture}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Bogus Swap}
+\begin{semiverbatim}
+void \alert<2>{bogusSwap(int \tikz[baseline]\node[rectangle,color=blue,anchor=base](q1){a};, int\tikz[baseline]\node[rectangle,color=blue,anchor=base](q2){b};)}
+\{   int t;
+
+    \myalert{3}{\point}t = a;
+    \myalert{4}{\point}a = b;
+    \myalert{5}{\point}b = t; \myalert{6}{\point}
+\}
+\end{semiverbatim}
+\begin{semiverbatim}
+    int n1 = 10, n2 = 20;
+
+   \myalert{1}{\point}bogusSwap(\tikz[baseline]\node[rectangle,draw=blue,anchor=base](p1){n1}; , \tikz[baseline]\node[rectangle,draw=blue,anchor=base](p2){n2}; );\myalert{7}{\point}
+\end{semiverbatim}
+\begin{overlayarea}{\textwidth}{3cm}
+\only<1>{ \myexplain{1}{Before Call}{ n1 = 10 and n2 = 20}}
+\only<2>{ \explain{Parameter Passing}{a is initialized to 10 and b to 20.}
+\begin{tikzpicture}[overlay]
+\draw [->] (p1.north) edge (q1.south);
+\draw [->] (p2.north) edge (q2.south);
+\end{tikzpicture}
+}
+\only<3>{ \myexplain{3}{Values}{ t=??, a=10, b=20, n1 = 10 and n2 = 20}}
+\only<4>{ \myexplain{4}{Values}{ t=10, a=10, b=20, n1 = 10 and n2 = 20}}
+\only<5>{ \myexplain{5}{Values}{ t=10, a=20, b=20, n1 = 10 and n2 = 20}}
+\only<6>{ \myexplain{6}{Values}{ t=10, a=20, b=10, n1 = 10 and n2 = 20}}
+\only<7>{ \myexplain{7}{Values}{ n1 = 10 and n2 = 20. a, b and t disappeared.}}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame} {Reference Variables}
+C++ provides reference variables that refer to other variables.
+\begin{enumerate}
+  \item A reference variable is declared using an \& between a type and a name.
+  \item Reference variables must be initialized.
+  \item int \& refVar = var; declares refVar to be a variable that refer to var that is an int variable.
+  \item After initialization,
+  \begin{itemize}
+    \item the reference variable can be used in places of the referent;
+    \item a reference variable and its referent can be thought of aliases;
+    \item refVar = 1 changes value of var to 1. Both refVar and var always have the same value;
+    \item a reference variable cannot be made to refer to another variable.
+  \end{itemize}
+
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Reference Variables}
+\begin{small}
+\begin{semiverbatim}
+int main()
+\{ int var = 10, var2=50;
+  int  & refVar = var;
+
+  /*\alert<1>{ var  = 10        var2 = 50       refVar = 10 } */
+
+  refVar = -20;
+
+  /*\alert<2>{ var  = -20       var2 = 50       refVar = -20 } */
+
+  var = -10;
+
+  /*\alert<3>{ var  = -10       var2 = 50       refVar = -10 } */
+
+  refVar = var2;
+
+  /*\alert<4>{ var  = 50        var2 = 50       refVar = 50 } */
+
+  return 0;
+\}
+\end{semiverbatim}
+\end{small}
+\end{frame}
+
+\begin{frame}[fragile]{Call/Pass by Reference}
+\begin{semiverbatim}
+void \alert<2>{swap(int &\tikz[baseline]\node[rectangle,color=blue,anchor=base](q1){a};, int &\tikz[baseline]\node[rectangle,color=blue,anchor=base](q2){b};)}
+\{   int t;
+
+    \myalert{3}{\point}t = a;
+    \myalert{4}{\point}a = b;
+    \myalert{5}{\point}b = t; \myalert{6}{\point}
+\}
+\end{semiverbatim}
+\begin{semiverbatim}
+    int n1 = 10, n2 = 20;
+
+   \myalert{1}{\point}swap(\tikz[baseline]\node[rectangle,draw=blue,anchor=base](p1){n1}; , \tikz[baseline]\node[rectangle,draw=blue,anchor=base](p2){n2}; );\myalert{7}{\point}
+\end{semiverbatim}
+\begin{tikzpicture}[overlay]
+\draw [<->] (p1.north) edge (q1.south);
+\draw [<->] (p2.north) edge (q2.south);
+\end{tikzpicture}
+
+\begin{overlayarea}{\textwidth}{3cm}
+\only<1>{ \myexplain{1}{Before Call}{ n1 = 10 and n2 = 20}}
+\only<2>{ \explain{Parameter Passing}{Reference a is initialized to refer to n1 and b to refer to n2. During the execution of swap, a is an alias of n1 and b is an alias of n2.}
+
+}
+\only<3>{ \myexplain{3}{Values}{ t=??, a=n1=10, b=n2=20}}
+\only<4>{ \myexplain{4}{Values}{ t=10, a=n1=10, b=n2=20}}
+\only<5>{ \myexplain{5}{Values}{ t=10, a=n1=20, b=n2=20}}
+\only<6>{ \myexplain{6}{Values}{ t=10, a=n1=20, b=n2=10}}
+\only<7>{ \myexplain{7}{Values}{ n1 = 20 and n2 = 10. t, a, b disappeared.}}
+\end{overlayarea}
+
+\end{frame}
+
+\begin{frame}[fragile]{Call by Reference}
+Reference parameters are needed when a function needs to return more than one value.
+
+\begin{small}
+\begin{semiverbatim}
+void maxmin(int a, int b, int c, int \&max, int \&min)
+\{  max = min = a;
+
+    if ( b > max ) max = b;
+    else if ( b < min ) min = b;
+
+    if ( c > max ) max = c;
+    else if ( c < min ) min = c;
+
+    return;
+\}
+\end{semiverbatim}
+\end{small}
+
+int x,y;
+maxmin(10,30,20, x, y);
+
+\end{frame}
+
+\begin{frame}[fragile]{Function Overloading}
+The same identifier can be used to name multiple functions. Those functions must have different lists of parameter types.
+\begin{small}
+\begin{semiverbatim}
+void \tikz[baseline]\node[rectangle,color=blue,anchor=base](q1){swap(int &a, int &b)};\{ ... \}
+
+void \tikz[baseline]\node[rectangle,color=blue,anchor=base](q2){swap(double &a, double &b)}; \{ ... \}
+\end{semiverbatim}
+\begin{semiverbatim}
+int i1 = 10, i2 = 20;
+
+\tikz[baseline]\node[rectangle,draw=blue,anchor=base](p1){swap(i1, i2)};;
+
+double d1 = 0.1, d2 = 0.2;
+
+\tikz[baseline]\node[rectangle,draw=blue,anchor=base](p2){swap(d1, d2)};;
+\end{semiverbatim}
+\begin{tikzpicture}[overlay]
+\draw [->] (p1.north) edge (q1.south);
+\draw [->] (p2.north) edge (q2.south);
+\end{tikzpicture}
+\end{small}
+\end{frame}
+
+\begin{frame}[fragile]{Function Overloading}
+The same identifier can be used to name multiple functions. Those functions must have different lists of parameter types.
+\begin{small}
+\begin{semiverbatim}
+\tikz[baseline]\node[rectangle,color=blue,anchor=base](q1){int max(int a, int b)};\{ ... \}
+
+\tikz[baseline]\node[rectangle,color=blue,anchor=base](q2){int max(int a, int b, int c)}; \{ ... \}
+\end{semiverbatim}
+\begin{semiverbatim}
+int i1 = 10, i2 = 20, i3=5;
+
+\tikz[baseline]\node[rectangle,draw=blue,anchor=base](p1){max(i1, i2)};;
+
+double d1 = 0.1, d2 = 0.2;
+
+\tikz[baseline]\node[rectangle,draw=blue,anchor=base](p2){max(i1, i2, i3)};;
+\end{semiverbatim}
+\begin{tikzpicture}[overlay]
+\draw [->] (p1.north) edge (q1.south);
+\draw [->] (p2.north) edge (q2.south);
+\end{tikzpicture}
+\end{small}
+\end{frame}
+
+
+\begin{frame}[fragile]{Default Arguments}
+Parameters may be given default values.
+\begin{semiverbatim}
+double income(double wage, int hours = 40)
+\{ return wage*hours; \}
+\end{semiverbatim}
+\begin{itemize}
+  \item hours is a default formal argument and wage is not.
+  \item income(20, 50) yields 1000.0
+  \item income(20.0) yields 800.0 - default value of the second argument is 40.
+  \item All non-default formal arguments must appear before all default formal arguments.
+  \item Default parameters must be passed by value.
+  \item A function may have multiple default arguments.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Default Arguments}
+\begin{semiverbatim}
+double f(int a, int b=1, int c=20, int d=300)\{...\}
+\end{semiverbatim}
+\begin{itemize}
+  \item f(10) is equal to f(10, 1, 20, 300).
+  \item f(10,20) is equal to f(10, 20, 20, 300).
+  \item f(10,20,0) is equal to f(10, 20, 0, 300).
+  \item f(1,2,3,4) does not use default values.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Static Variables}
+Local variables of a function can be made history-sensitive by declaring them to be \textit{static}.
+ \begin{itemize}
+   \item Static variables keep their values after an invocation to the function is completed. Non-static variables do not.
+   \item A static variable has the same effect as a global variable but it is local to the function.
+   \item  It is initialized only once and its lifetime spans the entire execution of the whole program.
+ \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Static Variables}
+\begin{small}
+\begin{semiverbatim}
+int next()
+\{ static int current = 0; // static
+  return ++ current;
+\}
+
+int next2()
+\{ int current = 0; // non-static
+  return ++ current; // always return 1
+\}
+
+for(int i=0, i<5, i++) cout << next() << " ";
+1 2 3 4 5
+
+
+for(int i=0, i<5, i++) cout << next2() << " ";
+1 1 1 1 1
+\end{semiverbatim}
+\end{small}
+
+
+
+
+\end{frame}
+
+\begin{frame}{The exit Function}
+\begin{itemize}
+  \item The call exit(5) terminates the execution of the program and returns 5 to the operating system.
+  \item \#include $<$cstdlib$>$ is required.
+  \item The exit function is usually used for abnormal termination of the program.
+\end{itemize}
+
+\end{frame}
+
+\end{document}
+
