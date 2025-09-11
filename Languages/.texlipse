@@ -1,14 +1,14 @@
 #TeXlipse project settings
-#Wed Sep 10 14:09:31 EDT 2025
-outputDir=
-markDer=true
-mainTexFile=Languages.tex
+#Thu Sep 11 13:27:06 EDT 2025
 bibrefDir=
 builderNum=2
-outputFile=Languages.pdf
-makeIndSty=
-srcDir=
-markTmpDer=true
-tempDir=
-outputFormat=pdf
 langSpell=
+mainTexFile=RecusiveDefinitions.tex
+makeIndSty=
+markDer=true
+markTmpDer=true
+outputDir=
+outputFile=RecusiveDefinitions.pdf
+outputFormat=pdf
+srcDir=
+tempDir=
