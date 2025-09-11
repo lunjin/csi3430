@@ -1,0 +1,152 @@
+\documentclass[notes=none]{beamer}
+
+\usepackage{tikz}
+\usepackage[linguistics]{forest}
+\usepackage[many]{tcolorbox}
+\usepackage{comment}
+\usepackage{multicol}
+\usepackage{listings}
+
+\newif\ifframeinlbf
+\frameinlbftrue
+\makeatletter
+\newcommand\listofframes{\@starttoc{lbf}}
+\makeatother
+
+\addtobeamertemplate{frametitle}{}{%
+    \ifframeinlbf%
+         \addtocontents{lbf}{%
+            \protect\makebox[2em][l]{%
+                \protect\usebeamercolor[fg]{structure}\insertframenumber\hfill%
+            }%
+            \protect\hyperlink{page.\insertpagenumber}\insertframetitle\par%
+        }%
+   \else\fi%
+}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\newcommand{\myalert}[2]{%
+    \tikz\node[coordinate](t#1){};\alert<#1>{#2}
+}
+
+
+\newcommand{\myexplain}[3]
+{\begin{tcolorbox}
+    [   tikznode boxed title,
+        enhanced,
+        arc=0mm,
+        interior style={white},
+        attach boxed title to top center= {yshift=-\tcboxedtitleheight/2},
+        fonttitle=\bfseries,
+        colbacktitle=white,coltitle=red,
+        boxed title style={size=small,colframe=red,boxrule=0pt},
+        title={\tikz\node[coordinate](s#1) {};#2}]
+#3
+\end{tcolorbox}
+\begin{tikzpicture}[overlay]
+\path<#1>[->, thick] (s#1) edge [bend left] (t#1);
+\end{tikzpicture}
+}
+
+\newcommand{\explain}[2]
+{\begin{tcolorbox}
+    [   tikznode boxed title,
+        enhanced,
+        arc=0mm,
+        interior style={white},
+        attach boxed title to top center= {yshift=-\tcboxedtitleheight/2},
+        fonttitle=\bfseries,
+        colbacktitle=white,coltitle=red,
+        boxed title style={size=small,colframe=red,boxrule=0pt},
+        title={#1}]
+#2
+\end{tcolorbox}
+}
+
+\def\point{\begin{tikzpicture}
+\fill[orange] (0,0) circle (2pt);
+\end{tikzpicture}}
+
+\setbeamertemplate{navigation symbols}{} %Remove navigation bar
+
+\tikzstyle{every picture}+=[remember picture]
+
+\usepackage{color}
+\newcommand{\vet}[1]{\foreach \num in {#1}{\el{\num}}}
+\newcommand{\el}[1]{\fbox{\parbox[c][2ex][c]{1.1em}{#1}}}
+\newcommand{\id}[1]{\parbox[r][2ex][b]{1.7em}{\raggedleft #1}}
+\newcommand{\bl}{\color{blue}}
+\newcommand{\gr}{\color{gray}}
+\newcommand{\re}{\color{red}}
+
+\title{Languages}
+\author{Lunjin Lu}
+\date{}
+
+
+\begin{document}
+\begin{comment}
+\end{comment}
+\frameinlbffalse
+\begin{frame}[fragile,t,allowframebreaks]{List of Frames}
+    \listofframes
+\end{frame}
+\frameinlbftrue
+
+
+\frame{ \titlepage
+}
+
+\begin{frame}{Recursive Definitions}
+A recusive definition defines a set as follows.
+\begin{itemize}
+  \item Specify basic objects of the set.
+  \item Specify how more complex objects
+        are constructed from less complex objects. 
+  \item State that only objects in the set are the 
+  	basic objects and objects  constructed using the specified rules. 
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Recursive Definition of EVEN}
+EVEN is recusively (inductively) defined by the following rules. 
+\begin{itemize}
+  \item [(1)]  $2\in EVEN$.
+  \item [(2)] If $n\in EVEN$ then $n+2\in EVEN$.
+  \item [(3)] EVEN doesn't contain any element other than those obtained using rules (1) and (2).
+\end{itemize}
+
+The third rule is called the rule of limitation. It is usually omitted 
+when a definition is said to be recursive or inductive. 
+
+\end{frame}
+
+\begin{frame}{Membership of EVEN}
+Rules in an inductive definition of a set can be used to 
+prove that an element is in the set. For instance, 
+the following is a proof that $6\in EVEN$.
+\begin{itemize}
+  \item [(a)] From rule (1), we know that  $2\in EVEN$.
+  \item [(b)] From (a) and rule (2), we know that $4\in EVEN$. 
+  \item [(c)] from (b) and rule (2), we conclude that $6\in EVEN$. 
+\end{itemize}
+
+The rule (2) is used twice in the above reasoning. 
+In the first time, $n=2$ and in the second time $n=4$.
+\end{frame}
+
+\begin{frame}{Notation}
+
+\end{frame}
+\end{document}
