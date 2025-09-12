@@ -113,149 +113,45 @@ A recusive definition defines a set as follows.
 \begin{itemize}
   \item Specify basic objects of the set.
   \item Specify how more complex objects
-        are constructed from less complex objects.
-  \item State that only objects in the set are the
-  	basic objects and objects  constructed using the specified rules.
+        are constructed from less complex objects. 
+  \item State that only objects in the set are the 
+  	basic objects and objects  constructed using the specified rules. 
 \end{itemize}
 
 \end{frame}
 
 \begin{frame}{Recursive Definition of EVEN}
-EVEN is recusively (inductively) defined by the following rules.
+EVEN is recusively (inductively) defined by the following rules. 
 \begin{itemize}
   \item [(1)]  $2\in EVEN$.
   \item [(2)] If $n\in EVEN$ then $n+2\in EVEN$.
   \item [(3)] EVEN doesn't contain any element other than those obtained using rules (1) and (2).
 \end{itemize}
 
-The third rule is called the rule of limitation. It is usually omitted
-when a definition is said to be recursive or inductive.
+The third rule is called the rule of limitation. It is usually omitted 
+when a definition is said to be recursive or inductive. 
 
 \end{frame}
 
 \begin{frame}{Membership of EVEN}
-Rules in an inductive definition of a set can be used to
-prove that an element is in the set. For instance,
+Rules in an inductive definition of a set can be used to 
+prove that an element is in the set. For instance, 
 the following is a proof that $6\in EVEN$.
 \begin{itemize}
   \item [(a)] From rule (1), we know that  $2\in EVEN$.
-  \item [(b)] From (a) and rule (2), we know that $4\in EVEN$.
-  \item [(c)] from (b) and rule (2), we conclude that $6\in EVEN$.
+  \item [(b)] From (a) and rule (2), we know that $4\in EVEN$. 
+  \item [(c)] from (b) and rule (2), we conclude that $6\in EVEN$. 
 \end{itemize}
 
-The rule (2) is used twice in the above reasoning.
+The rule (2) is used twice in the above reasoning. 
 In the first time, $n=2$ and in the second time $n=4$.
 \end{frame}
 
 \begin{frame}{Notation}
-The rule 
-\begin{itemize}
-  \item [(2)] If $n\in EVEN$ then $n+2\in EVEN$.
-\end{itemize} 
-\pause 
-\vspace{\fill}
-
-Is written as \vspace{\fill}
-
-\begin{itemize}
-    \item [(2)] 
-\(\begin{prooftree}
-n\in  EVEN \justifies n+2 \in EVEN
+If $n\in EVEN$ then $n+2\in EVEN$. 
+\begin{prooftree}
+$n\in  EVEN$ \justifies $n+2  EVEN$
 \end{prooftree}
-\)
-\end{itemize}
 \end{frame}
-
-\begin{frame}{Alternative Definition of EVEN}
-EVEN is recusively (inductively) defined by the following rules.
-\begin{itemize} \setlength{\itemsep}{1.5em}
-  \item [(A)]  $\begin{prooftree} \justifies 2\in EVEN \end{prooftree}$ 
-  \item [(B)] \(\begin{prooftree}
-m\in  EVEN \qquad n\in EVEN \justifies m+m \in EVEN
-\end{prooftree}
-\)
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Proof of $8\in EVEN$}
- \[ 
- \begin{prooftree} \tiny
- 	\begin{prooftree} 
- 		\begin{prooftree} {} \justifies 2\in EVEN \using (A) \end{prooftree} 
- 		\qquad
- 		\begin{prooftree} {} \justifies 2\in EVEN \using (A) \end{prooftree} 
- 		\justifies 4\in EVEN \using (B) 
- 	\end{prooftree} \qquad 
-  	\begin{prooftree} 
- 		\begin{prooftree} {} \justifies 2\in EVEN \using (A) \end{prooftree} 
- 		\qquad
- 		\begin{prooftree} {} \justifies 2\in EVEN \using (A) \end{prooftree} 
- 		\justifies 4\in EVEN \using (B) 
- 	\end{prooftree}
- \justifies 8\in EVEN 
- \using (B)
- \end{prooftree}
- \]
-\end{frame}
-
-\begin{frame}{Inductive Definition of Polynomials}
-
-\end{frame}
-
-\begin{frame}{Inductive Definition of Arithmetic Expressions}
-
-\end{frame}
-
-\begin{frame}{Inductive Definition of $\Sigma^*$}
-The set of strings over $\Sigma$, denoted $\Sigma^*$, is inductively defined 
-\begin{itemize}
-  \item $\Lambda\in\Sigma^*$
-  \item \(\begin{prooftree}
-  			w\in\Sigma^*\justifies aw\in\Sigma \using (a\in\Sigma)
-  		\end{prooftree}\)
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}{Inductive Definition of $L^*$}
-
-\end{frame}
-
-\begin{frame}{Functions over Inductively Defined Sets} 
-Functions over inductively defined set are inductive defined. 
-\begin{itemize}
-  \item Define functions for each basic objects - one clause for each axioms.
-  \item Define functions for constructed objects - one clause for each way 
-  		of object construction. 
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Length function over Strings}
-The length function $|\cdot |: \Sigma^*\mapsto N$ where $N$ is the set of 
-natural numbers is defined as follows. 
-\begin{itemize}
-  \item $|\Lambda|=0$ 
-  \item $|aw|=1+|w|$ 
-\end{itemize} 
-
-\end{frame}
-
-\begin{frame}{Concatenation function over Strings}
-The length function $\cdot: \Sigma^*\times \Sigma^*\mapsto \Sigma^*$  is defined as follows. 
-\begin{itemize}
-  \item $\Lambda\cdot y=y$ 
-  \item $(ax)\cdot y=a(x\cdot y)$ 
-\end{itemize} 
-\end{frame}
-
-\begin{frame}{Structural Induction}
-
-\end{frame}
-
-\begin{frame}{Proof of  $|xy|=|x|+|y|$}
-
-\end{frame}
-
-
 
 \end{document}
