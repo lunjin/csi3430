@@ -1,0 +1,155 @@
+\documentclass{beamer}
+
+
+\usepackage{tikz}
+\usepackage[linguistics]{forest}
+\usepackage[many]{tcolorbox}
+\usepackage{comment}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{prooftree}
+
+\newif\ifframeinlbf
+\frameinlbftrue
+\makeatletter
+\newcommand\listofframes{\@starttoc{lbf}}
+\makeatother
+
+\addtobeamertemplate{frametitle}{}{%
+    \ifframeinlbf%
+         \addtocontents{lbf}{%
+            \protect\makebox[2em][l]{%
+                \protect\usebeamercolor[fg]{structure}\insertframenumber\hfill%
+            }%
+            \protect\hyperlink{page.\insertpagenumber}\insertframetitle\par%
+        }%
+   \else\fi%
+}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\newcommand{\myalert}[2]{%
+    \tikz\node[coordinate](t#1){};\alert<#1>{#2}
+}
+
+
+\newcommand{\myexplain}[3]
+{\begin{tcolorbox}
+    [   tikznode boxed title,
+        enhanced,
+        arc=0mm,
+        interior style={white},
+        attach boxed title to top center= {yshift=-\tcboxedtitleheight/2},
+        fonttitle=\bfseries,
+        colbacktitle=white,coltitle=red,
+        boxed title style={size=small,colframe=red,boxrule=0pt},
+        title={\tikz\node[coordinate](s#1) {};#2}]
+#3
+\end{tcolorbox}
+\begin{tikzpicture}[overlay]
+\path<#1>[->, thick] (s#1) edge [bend left] (t#1);
+\end{tikzpicture}
+}
+
+\newcommand{\explain}[2]
+{\begin{tcolorbox}
+    [   tikznode boxed title,
+        enhanced,
+        arc=0mm,
+        interior style={white},
+        attach boxed title to top center= {yshift=-\tcboxedtitleheight/2},
+        fonttitle=\bfseries,
+        colbacktitle=white,coltitle=red,
+        boxed title style={size=small,colframe=red,boxrule=0pt},
+        title={#1}]
+#2
+\end{tcolorbox}
+}
+
+\def\point{\begin{tikzpicture}
+\fill[orange] (0,0) circle (2pt);
+\end{tikzpicture}}
+
+\setbeamertemplate{navigation symbols}{} %Remove navigation bar
+
+\tikzstyle{every picture}+=[remember picture]
+
+\usepackage{color}
+\newcommand{\vet}[1]{\foreach \num in {#1}{\el{\num}}}
+\newcommand{\el}[1]{\fbox{\parbox[c][2ex][c]{1.1em}{#1}}}
+\newcommand{\id}[1]{\parbox[r][2ex][b]{1.7em}{\raggedleft #1}}
+\newcommand{\bl}{\color{blue}}
+\newcommand{\gr}{\color{gray}}
+\newcommand{\re}{\color{red}}
+
+\title{Regular Expressions}
+\author{Lunjin Lu}
+\date{}
+
+
+\begin{document}
+\begin{comment}
+\end{comment}
+\frameinlbffalse
+\begin{frame}[fragile,t,allowframebreaks]{List of Frames}
+    \listofframes
+\end{frame}
+\frameinlbftrue
+
+
+\frame{ \titlepage
+}
+
+\begin{frame}{Regular Expressions}
+Regular Expressions are patterns for strings. A regular expression define a langauge that 
+consists of those strings that conform to the pattern. For example
+\begin{itemize}
+  \item a 
+  \item b*
+  \item ab*
+  \item ab*+ba*
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Grammar of Regular Expressions }
+The set of regular expressions RegEx is inductively defined as follows. 
+\begin{itemize}
+  \item $\Lambda\in RegEx$
+  \item $\emptyset\in RegEx$
+  \item $\ldots$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example Regular Expressions}
+
+\end{frame}
+
+\begin{frame}{Language Concatenation}
+
+\end{frame}
+
+\begin{frame}{Language of a Regular Expression} 
+The language of a regular expresison $r$ is denoted as $L(r)$ which is defined as follows. 
+\begin{itemize}
+  \item \ldots
+\end{itemize}
+
+A language $L$ is said to be reglar iff there is a regular expression such that $L=L(r)$.
+\end{frame}
+
+\begin{frame}{Equivalence between Regular Expressions}
+Two regular expressions are equivalent if their langauges are the same. 
+\[ r_1=r_2 \Longleftrightarrow L(r_1)=L(r_2)
+\]
+\end{frame}
+
+\end{document}

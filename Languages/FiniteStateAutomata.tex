@@ -1,0 +1,234 @@
+\documentclass{beamer}
+
+\usepackage{wasysym}
+\usepackage{tikz}
+\usepackage[linguistics]{forest}
+\usepackage[many]{tcolorbox}
+\usepackage{comment}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{prooftree}
+
+\newif\ifframeinlbf
+\frameinlbftrue
+\makeatletter
+\newcommand\listofframes{\@starttoc{lbf}}
+\makeatother
+
+\addtobeamertemplate{frametitle}{}{%
+    \ifframeinlbf%
+         \addtocontents{lbf}{%
+            \protect\makebox[2em][l]{%
+                \protect\usebeamercolor[fg]{structure}\insertframenumber\hfill%
+            }%
+            \protect\hyperlink{page.\insertpagenumber}\insertframetitle\par%
+        }%
+   \else\fi%
+}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\newcommand{\myalert}[2]{%
+    \tikz\node[coordinate](t#1){};\alert<#1>{#2}
+}
+
+
+\newcommand{\myexplain}[3]
+{\begin{tcolorbox}
+    [   tikznode boxed title,
+        enhanced,
+        arc=0mm,
+        interior style={white},
+        attach boxed title to top center= {yshift=-\tcboxedtitleheight/2},
+        fonttitle=\bfseries,
+        colbacktitle=white,coltitle=red,
+        boxed title style={size=small,colframe=red,boxrule=0pt},
+        title={\tikz\node[coordinate](s#1) {};#2}]
+#3
+\end{tcolorbox}
+\begin{tikzpicture}[overlay]
+\path<#1>[->, thick] (s#1) edge [bend left] (t#1);
+\end{tikzpicture}
+}
+
+\newcommand{\explain}[2]
+{\begin{tcolorbox}
+    [   tikznode boxed title,
+        enhanced,
+        arc=0mm,
+        interior style={white},
+        attach boxed title to top center= {yshift=-\tcboxedtitleheight/2},
+        fonttitle=\bfseries,
+        colbacktitle=white,coltitle=red,
+        boxed title style={size=small,colframe=red,boxrule=0pt},
+        title={#1}]
+#2
+\end{tcolorbox}
+}
+
+\def\point{\begin{tikzpicture}
+\fill[orange] (0,0) circle (2pt);
+\end{tikzpicture}}
+
+\setbeamertemplate{navigation symbols}{} %Remove navigation bar
+
+\tikzstyle{every picture}+=[remember picture]
+
+\usepackage{color}
+\newcommand{\vet}[1]{\foreach \num in {#1}{\el{\num}}}
+\newcommand{\el}[1]{\fbox{\parbox[c][2ex][c]{1.1em}{#1}}}
+\newcommand{\id}[1]{\parbox[r][2ex][b]{1.7em}{\raggedleft #1}}
+\newcommand{\bl}{\color{blue}}
+\newcommand{\gr}{\color{gray}}
+\newcommand{\re}{\color{red}}
+
+\title{Finite State Automata}
+\author{Lunjin Lu}
+\date{}
+
+
+\begin{document}
+\begin{comment}
+\end{comment}
+\frameinlbffalse
+\begin{frame}[fragile,t,allowframebreaks]{List of Frames}
+    \listofframes
+\end{frame}
+\frameinlbftrue
+
+
+\frame{ \titlepage
+}
+
+\begin{frame}{Vending Machine}
+The vending machine sells coffee. It accepts coins of 5\cent~ and 10\cent. It dispenses 
+a can of coffee when it gets exact amount of 25 cents. 
+It is stuck when the amount exceeds 25 cents.  
+
+The machine has a number of states and two input symbols. 
+Its construction is illustrated below. 
+
+\begin{center}
+\begin{tabular}{c|c|c}
+state$\backslash$input       & 5\cent & 10\cent \\ \hline
+q0     & q5     & q10 \\ \hline  
+\end{tabular} 
+\end{center} 
+\end{frame}
+
+\begin{frame}{Transition Diagram}
+
+\end{frame} 
+
+\begin{frame}{Language of Vending Machine} 
+Which sequences of coins beget coffee? Starting at the initial state q0 and machines receives (consumes) 
+coins one by one and changes its state according to the coin it gets. 
+\begin{itemize}
+  \item 5\cent 5\cent 10\cent 5\cent - coffee is dispensed
+  \[q0 \longrightarrow^{5\cent} q5 \longrightarrow^{5\cent} q10 \longrightarrow^{10\cent} q20 \longrightarrow^{5\cent} q25  \]
+  \item 5\cent 5\cent 10\cent 10\cent - machine is stuck
+   \[q0 \longrightarrow^{5\cent} q5 \longrightarrow^{5\cent} q10 \longrightarrow^{10\cent} q20 \not\longrightarrow^{10\cent}  \]
+\end{itemize}
+
+\end{frame}
+
+\begin{frame} {Stuckness and Trap States}
+The vending machine is stuck on input string $\cent 5\cent 10\cent 10\cent$ 
+because there is on transition from q20 labelled with 10\cent. 
+A trap state  can be added so that the machine always make progress. The machine transitions to 
+the trap state from a given state upon receiving a given input symbol
+when it would otherwise get stuck from the state on reading the input symbol. 
+The machine stays at the trap state upon reading any input symbol.  
+The vending machine with an added trap state is diagramed below. 
+\end{frame}
+
+\begin{frame}{Deterministic Finite Automata}
+A deterministic finite automaton is a 5-tuple $\langle Q, \Sigma, \delta, q_0, F\rangle$ where
+\begin{itemize}
+  \item Q is a finite set of states,
+  \item $\Sigma$ is a finite set of symbols,
+  \item $q_0\in Q$ ($q_0$ is called the initial state),
+  \item $F\subseteq Q$ (states in F are called final states),
+  \item $\delta:Q\times \Sigma\mapsto Q$ is called the transition function. 
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Traces/Runs}
+Traces, the label of a trace, 
+$p\leadsto^{w} q$ 
+
+\end{frame}
+
+\begin{frame}{Transition function on strings $\bar{\delta}$}
+
+\end{frame}
+
+\begin{frame}{Language Accepted by a DFA}
+
+\end{frame}
+
+\begin{frame}{Design of DFA - Example} 
+Design a DFA that accepts $\{awa,bwb\mid w\in\{a,b\}^*\}$. 
+
+\end{frame}
+
+\begin{frame}{Design of DFA - Example}
+Design a DFA that accepts $\{w\mid w\in \{0,1,2\}^*\wedge \mbox{Sum of digits in w is a multiple of 3}\}$. 
+
+\end{frame}
+
+\begin{frame}{Design of DFA - Example} 
+Design a DFA that accepts EVEN-EVEN. 
+
+\end{frame}
+
+
+\begin{frame}{NFA}
+
+\end{frame}
+
+\begin{frame}{NFA Example}
+
+\end{frame}
+
+\begin{frame}{$\Lambda$-closure}
+Inductive definition
+\end{frame}
+
+\begin{frame}{Transition function on strings $\bar{\delta}$}
+$\bar{\delta}(q,w)$ is the set of states the machine 
+may transition to starting at state $q$ after consuming input string $w$.
+Those are the states $q'$ such that there is a trace from $q$ to $q'$ labelled with $w$. 
+\[ \bar{\delta}(q,w) =\{q' \mid q\leadsto^{w} q'\}
+\] 
+Alternatively, \(\bar{\delta}(q,w) = \bar{\delta}(\Lambda\mbox{-closure}(\{q\}),w)\) where
+\begin{eqnarray*}
+\bar{\delta}(S,\Lambda) &=& S \\ 
+\bar{\delta}(S,aw) &=&  \bar{\delta}(\Lambda\mbox{-closure}(\bigcup_{s\in S}\delta(s,a)),w)
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{Language Accepted by a NFA}
+Let $M=$ be a NFA. 
+\[L(M) = \{w \mid \exists q\in F. q_0\leadsto^{W} q\}\]
+Alternatively, 
+
+\[ L(M) = \{w \mid \bar{\delta}(q_0,w) \cap F\neq\emptyset\}\]
+
+\end{frame}
+
+\begin{frame}{Design of NFA}
+
+\end{frame}
+
+\end{document}
