@@ -2,6 +2,11 @@
 
 \usepackage{wasysym}
 \usepackage{tikz}
+\usetikzlibrary{automata,positioning,arrows.meta}
+%\usepackage[graphics,tightpage,active,pdftex]{preview}
+%\setlength{\PreviewBorder}{5pt}
+%\PreviewEnvironment{tikzpicture}
+
 \usepackage[linguistics]{forest}
 \usepackage[many]{tcolorbox}
 \usepackage{comment}
@@ -228,6 +233,53 @@ Alternatively,
 \end{frame}
 
 \begin{frame}{Design of NFA}
+
+\end{frame}
+
+\begin{frame}{Equivalence between DFAs and NFAs}
+\begin{theorem} For any NFA N, there is a DFA D such that \(L(D)=L(N)\).  
+\end{theorem}
+\end{frame}
+
+\begin{frame}{Example of NFA Conversion} 
+What are this NFA's possible states after consuming 0011? 
+
+\begin{tikzpicture}[>={Stealth[width=6pt,length=9pt]}, accepting/.style={double distance = 2pt, outer sep = 1pt + \pgflinewidth}, shorten >=1pt, auto]
+  \draw (30.0pt, -140.0pt)node[state, initial, initial text =](0){$q_{0}$};
+  \draw (30.0pt, -55.0pt)node[state](1){$q_{1}$};
+  \draw (200.0pt, -55.0pt)node[state](2){$q_{2}$};
+  \draw (200.0pt, -140.0pt)node[state, accepting](3){$q_{3}$};
+  \path[->] (1) edge[bend left] node{0}(2);
+  \path[->] (2) edge[bend left] node{$\lambda$}(1);
+  \path[->] (1) edge[loop above] node{1}(1);
+  \path[->] (2) edge[loop above] node{1}(2);
+  \path[->] (3) edge[loop below] node{1}(3);
+  \path[->] (0) edge[loop below] node{1}(0);
+  \path[->] (0) edge[bend left] node{0}(1);
+  \path[->] (1) edge[bend left] node{$\lambda$}(0);
+  \path[->] (2) edge[bend left] node{0}(3);
+  \path[->] (3) edge[bend left] node{$\lambda$}(2);
+  \path[->] (3) edge node{0}(0);
+\end{tikzpicture}
+
+\end{frame}
+
+\begin{frame}{Subset Algorithm (Powerset Construction)} 
+
+
+\end{frame} 
+
+\begin{frame}{Example of NFA Conversion} 
+
+\end{frame}
+
+\begin{frame}{Regular Expressions to NFAs}
+
+\end{frame}
+
+
+
+\begin{frame}{NFAs to Regular Expressions}
 
 \end{frame}
 
