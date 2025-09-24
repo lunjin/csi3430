@@ -273,13 +273,96 @@ What are this NFA's possible states after consuming 0011?
 
 \end{frame}
 
-\begin{frame}{Regular Expressions to NFAs}
+\begin{frame}[allowframebreaks]{Regular Expressions to NFAs}
+\begin{theorem} Given a regular expression $r$, there is an NFA $M$ such that $L(M)=L(r)$. \end{theorem}
+
+ The proof is done by constructing $M$ from $r$ using the Thompson's algorithm. 
+The algorithm constructs NFAs from regular expressions inductively.
+Each constructed NFA has the following property: its initial state has no imcoming transition; 
+it has a unique final state that has no outgoing transition. Let $\Sigma$ be the alphabet of $r$. 
+
+\begin{itemize}
+  \item Case $r=\emptyset$: $M=\langle \{q_i,q_f\},\Sigma,\delta,q_i,\{q_f\}\rangle$ 
+  	with $\delta=\emptyset$.
+  \item Case $r=\Lambda$: $M=\langle \{q_i,q_f\},\Sigma,\delta,q_i,\{q_f\}\rangle$ 
+  	with $\delta = \{q_i\longrightarrow^\Lambda q_f\}$. 
+  \item Case $r=a$: $M=\langle \{q_i,q_f\},\Sigma,\delta,q_i,\{q_f\}\rangle$ 
+  	with $\delta = \{q_i\longrightarrow^a q_f\}$. 
+  \item Case $r=r_1+r_2$. Construct recursively $M^1=\langle Q^1,\Sigma, \delta^1,q_i^1, \{q_f^1\}\rangle$ and 
+         $M_2=\langle Q^2,\Sigma, \delta^2,q_i^2, \{q_f^2\}\rangle$ such that 
+         $L(M^1)=L(r_1)$ and $L(M^2)=L(r_2)$ and $Q^1\cap Q^2=\emptyset$. Then 
+         construct $M=\langle Q^1\cup Q^2\cup\{q_i,q_f\},\Sigma, \delta,q_i, \{q_f\}\rangle$ 
+        where $q_i,q_f\not\in  Q^1\cup Q^2$
+        and $\delta=\delta^1\cup\delta^2\cup\{q_i\longrightarrow^\Lambda q_i^1, q_i\longrightarrow^\Lambda q_i^2, 
+        q_f^1\longrightarrow^\Lambda q_f, q_f^2\longrightarrow^\Lambda q_f\}$. 
+     \item Case $r=r_1\cdot r_2$. Construct recursively $M^1=\langle Q^1,\Sigma, \delta^1,q_i^1, \{q_f^1\}\rangle$ and 
+         $M_2=\langle Q^2,\Sigma, \delta^2,q_i^2, \{q_f^2\}\rangle$ such that 
+         $L(M^1)=L(r_1)$ and $L(M^2)=L(r_2)$ and $Q^1\cap Q^2=\emptyset$. 
+        Then construct $M=\langle Q^1\cup Q^2\cup\{q_i,q_f\},\Sigma, \delta,q_i, \{q_f\}\rangle$ 
+        where $q_i,q_f\not\in  Q^1\cup q^2$
+        and $\delta=\delta^1\cup\delta^2\cup\{q_i\longrightarrow^\Lambda q_i^1,  
+        q_f^1 \longrightarrow^\Lambda q_i^2, q_f^2\longrightarrow^\Lambda q_f\}$.  
+     \item Case $r=(r_1)$. Construct recursively $M^1$ such that $L(M^1)=L(r_1)$ and then put $M=M^1$.
+     \item Case $r=r_1^*$.  Construct recursively $M^1=\langle Q^1,\Sigma, \delta^1,q_i^1, \{q_f^1\}\rangle$ and 
+         such that 
+         $L(M^1)=L(r_1)$. Then 
+         construct $M=\langle Q^1\cup\{q_i,q_f\},\Sigma, \delta,q_i, \{q_f\}\rangle$ 
+        where $q_i,q_f\not\in  Q^1$
+        and $\delta=\delta^1\cup\{ q_f^1 \longrightarrow^\Lambda q_i^1, 
+        q_i\longrightarrow^\Lambda q_i^1,  
+        q_f^1\longrightarrow^\Lambda q_f, q_i \longrightarrow^\Lambda q_f\}$.    
+\end{itemize}
+
+
+
 
 \end{frame}
 
 
 
-\begin{frame}{NFAs to Regular Expressions}
+\begin{frame}[allowframebreaks]{NFAs to Regular Expressions}
+\begin{theorem}
+Given an NFA M, there is a regular expression r such that $L(r)=L(M)$. 
+\end{theorem}
+
+The proof uses the notion of a Generalized Transition Graph (aka Generalized NFA). 
+A transition from one state to another in a GTG is labelled with a regular expression. 
+The GTG transitions from the source state to the target upon reading a string in 
+the langauge of the regular expression. Every NFA is a GTG. 
+
+Given a GTG M, the algorithm works as follows.
+
+
+\begin{itemize}
+  \item Step 1: Add a new state $q_i$ to $M$ and add a $\Lambda$ transition from $q_i$ to the initial state of $M$. 
+                Make $q_i$ the new initial state and the orginal initial state of $M$ non-initial. 
+                Note that $q_i$ has no incoming transition. This property is maintained throughout the process. 
+  \item Step 2: Add a new state $q_f$ to $M$ and add a $\Lambda$ transition from each final state of $M$ to $q_f$. 
+  				Make $q_f$ the new final state and the orginal final states of $M$ non-final. 
+  				Note that $q_f$ has no outgoing transition. This property is maintained throughout the process.
+  \item Step 3: For each pair of states $p$ and $q$, if there are multiple transitions from $p$ to $q$ 
+  				then merge them into one. 
+  				Let all the transitions from $p$ to $q$ be $p\longrightarrow^{r_1} q, p\longrightarrow^{r_2} q, 
+  					\cdots,  p\longrightarrow^{r_k} q$. 
+                The merged transition is $p\longrightarrow^{r_1+r_2\cdots r_k} q$.
+                
+                After this step, there is at most one transition from $p$ to $q$ for all states $p$ and $q$. 
+   \item Step 4: Repeatedly eliminate a state from $M$ until $M$ has no other states than $q_i$ and $q_f$ as follows.
+   			\begin{itemize} 
+   			  \item Pick a state $s$ that is not $q_i$ or $q_f$. 
+   			  		If there is a loop from $s$ to $s$,
+   			  		let $R$ be the label of the transition. Otherwise, $R=\Lambda$. 
+   			  \item For each state $p$ such that there is a transition 
+   			  		$p\longrightarrow^P s$ and each state $q$ such that there is a transition $s\longrightarrow^ Q q$,
+   			  		\begin{itemize} 
+   			  		  \item Add a new transiton $p\longrightarrow^{PR^*Q} q$ to $M$
+   			  		  \item If there was a transition from $p$ to $q$ before the new transiton was added, 
+   			  		  merge it with the new one. This ensure that there is at most one transition from $p$ to $q$. 
+					\end{itemize}
+   			   \item Remove the state $s$ and its incoming and outgoing transitions.
+   			\end{itemize}    
+   	\item Step 5: If $q_i\longrightarrow^R q_f$ then return $R$ else return $\emptyset$. 
+\end{itemize}
 
 \end{frame}
 
