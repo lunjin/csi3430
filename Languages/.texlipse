@@ -1,14 +1,14 @@
 #TeXlipse project settings
-#Wed Sep 17 06:48:20 EDT 2025
-outputDir=
-markDer=true
-mainTexFile=FiniteStateAutomata.tex
+#Thu Sep 25 13:37:34 EDT 2025
 bibrefDir=
 builderNum=2
-outputFile=Slides.pdf
-makeIndSty=
-srcDir=
-markTmpDer=true
-tempDir=
-outputFormat=pdf
 langSpell=
+mainTexFile=RegularExpressions.tex
+makeIndSty=
+markDer=true
+markTmpDer=true
+outputDir=
+outputFile=RegularExpressions.pdf
+outputFormat=pdf
+srcDir=
+tempDir=
