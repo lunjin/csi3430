@@ -1,17 +1,28 @@
-\makebox [2em][l]{\usebeamercolor [fg]{structure}3\hfill }\hyperlink {page.3}{Vending Machine}\par 
-\makebox [2em][l]{\usebeamercolor [fg]{structure}4\hfill }\hyperlink {page.4}{Transition Diagram}\par 
-\makebox [2em][l]{\usebeamercolor [fg]{structure}5\hfill }\hyperlink {page.5}{Language of Vending Machine}\par 
-\makebox [2em][l]{\usebeamercolor [fg]{structure}6\hfill }\hyperlink {page.6}{Stuckness and Trap States}\par 
-\makebox [2em][l]{\usebeamercolor [fg]{structure}7\hfill }\hyperlink {page.7}{Deterministic Finite Automata}\par 
-\makebox [2em][l]{\usebeamercolor [fg]{structure}8\hfill }\hyperlink {page.8}{Traces/Runs}\par 
-\makebox [2em][l]{\usebeamercolor [fg]{structure}9\hfill }\hyperlink {page.9}{Transition function on strings $\bar {\delta }$}\par 
-\makebox [2em][l]{\usebeamercolor [fg]{structure}10\hfill }\hyperlink {page.10}{Language Accepted by a DFA}\par 
-\makebox [2em][l]{\usebeamercolor [fg]{structure}11\hfill }\hyperlink {page.11}{Design of DFA - Example}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}4\hfill }\hyperlink {page.4}{Vending Machine}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}5\hfill }\hyperlink {page.5}{Transition Diagram}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}6\hfill }\hyperlink {page.6}{Language of Vending Machine}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}7\hfill }\hyperlink {page.7}{Stuckness and Trap States}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}8\hfill }\hyperlink {page.8}{Deterministic Finite Automata}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}9\hfill }\hyperlink {page.9}{Traces/Runs}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}10\hfill }\hyperlink {page.10}{Transition function on strings $\bar {\delta }$}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}11\hfill }\hyperlink {page.11}{Language Accepted by a DFA}\par 
 \makebox [2em][l]{\usebeamercolor [fg]{structure}12\hfill }\hyperlink {page.12}{Design of DFA - Example}\par 
 \makebox [2em][l]{\usebeamercolor [fg]{structure}13\hfill }\hyperlink {page.13}{Design of DFA - Example}\par 
-\makebox [2em][l]{\usebeamercolor [fg]{structure}14\hfill }\hyperlink {page.14}{NFA}\par 
-\makebox [2em][l]{\usebeamercolor [fg]{structure}15\hfill }\hyperlink {page.15}{NFA Example}\par 
-\makebox [2em][l]{\usebeamercolor [fg]{structure}16\hfill }\hyperlink {page.16}{$\Lambda $-closure}\par 
-\makebox [2em][l]{\usebeamercolor [fg]{structure}17\hfill }\hyperlink {page.17}{Transition function on strings $\bar {\delta }$}\par 
-\makebox [2em][l]{\usebeamercolor [fg]{structure}18\hfill }\hyperlink {page.18}{Language Accepted by a NFA}\par 
-\makebox [2em][l]{\usebeamercolor [fg]{structure}19\hfill }\hyperlink {page.19}{Design of NFA}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}14\hfill }\hyperlink {page.14}{Design of DFA - Example}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}15\hfill }\hyperlink {page.15}{NFA}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}16\hfill }\hyperlink {page.16}{NFA Example}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}17\hfill }\hyperlink {page.17}{$\Lambda $-closure}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}18\hfill }\hyperlink {page.18}{Transition function on strings $\bar {\delta }$}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}19\hfill }\hyperlink {page.19}{Language Accepted by a NFA}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}20\hfill }\hyperlink {page.20}{Design of NFA}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}21\hfill }\hyperlink {page.21}{Equivalence between DFAs and NFAs}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}22\hfill }\hyperlink {page.22}{Example of NFA Conversion}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}23\hfill }\hyperlink {page.23}{Example NFA}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}24\hfill }\hyperlink {page.24}{Subset Algorithm (Powerset Construction)}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}25\hfill }\hyperlink {page.25}{Example of NFA Conversion}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}26\hfill }\hyperlink {page.26}{Regular Expressions to NFAs\relax {} \beamer@insertframetitlecontinuation }\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}27\hfill }\hyperlink {page.27}{Regular Expressions to NFAs\relax {} \beamer@insertframetitlecontinuation }\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}28\hfill }\hyperlink {page.28}{Regular Expressions to NFAs\relax {} \beamer@insertframetitlecontinuation }\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}29\hfill }\hyperlink {page.29}{NFAs to Regular Expressions\relax {} \beamer@insertframetitlecontinuation }\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}30\hfill }\hyperlink {page.30}{NFAs to Regular Expressions\relax {} \beamer@insertframetitlecontinuation }\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}31\hfill }\hyperlink {page.31}{NFAs to Regular Expressions\relax {} \beamer@insertframetitlecontinuation }\par 
