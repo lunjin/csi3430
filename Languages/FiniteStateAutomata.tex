@@ -264,7 +264,30 @@ What are this NFA's possible states after consuming 0011?
 
 \end{frame}
 
+\begin{frame}{Example NFA}
+\end{frame}
+
 \begin{frame}{Subset Algorithm (Powerset Construction)} 
+Given an NFA $N=\langle Q,\Sigma,\delta, q_i, F \rangle$,
+a DFA $D=\langle Q^D, \Sigma, \delta^D,q_i^D, F^D\rangle$ is constructed as follows. 
+Each state in $Q^D$ is a $\Lambda$-closed subset of $Q$. 
+
+\begin{itemize} 
+  \item Step 1: $q_i^D:=\Lambda\mbox{-closure}(\{q_i\})$; make $q_i^D$ unmarked; $Q^D:=\{q_i^D\}$; $\delta^D=\emptyset$;
+  \item Step 2: Repeat the following until all states in $Q^D$ are marked.
+    \begin{itemize}
+      \item Pick an unmarked state $S$ from $Q^D$, 
+      \item Mark $S$
+      \item For each $a\in\Sigma$, 
+            \begin{itemize}
+              \item $S_a:=\Lambda\mbox{-closure}(\bigcup_{s\in S}\delta(s,a))$, 
+              \item $\delta^D := \delta^D\cup\{S\longrightarrow^a S_a\}$;
+              \item if $S_a\not\in Q^D$ then $Q^D:=Q^D\cup\{S_a\}$ and make $S_a$ unmarked;
+            \end{itemize}
+    \end{itemize}
+  \item Step 3: $F^D=\{S\in Q^D\mid S\cap F\neq\emptyset\}$
+\end{itemize}
+ 
 
 
 \end{frame} 
