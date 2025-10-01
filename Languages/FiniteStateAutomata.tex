@@ -312,7 +312,7 @@ it has a unique final state that has no outgoing transition. Let $\Sigma$ be the
   \item Case $r=a$: $M=\langle \{q_i,q_f\},\Sigma,\delta,q_i,\{q_f\}\rangle$ 
   	with $\delta = \{q_i\longrightarrow^a q_f\}$. 
   \item Case $r=r_1+r_2$. Construct recursively $M^1=\langle Q^1,\Sigma, \delta^1,q_i^1, \{q_f^1\}\rangle$ and 
-         $M_2=\langle Q^2,\Sigma, \delta^2,q_i^2, \{q_f^2\}\rangle$ such that 
+         $M^2=\langle Q^2,\Sigma, \delta^2,q_i^2, \{q_f^2\}\rangle$ such that 
          $L(M^1)=L(r_1)$ and $L(M^2)=L(r_2)$ and $Q^1\cap Q^2=\emptyset$. Then 
          construct $M=\langle Q^1\cup Q^2\cup\{q_i,q_f\},\Sigma, \delta,q_i, \{q_f\}\rangle$ 
         where $q_i,q_f\not\in  Q^1\cup Q^2$

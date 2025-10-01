@@ -1,14 +1,14 @@
 #TeXlipse project settings
-#Thu Sep 25 13:37:34 EDT 2025
+#Tue Sep 30 21:42:59 EDT 2025
+outputDir=
+markDer=true
+mainTexFile=F2025-test01.tex
 bibrefDir=
 builderNum=2
-langSpell=
-mainTexFile=RegularExpressions.tex
+outputFile=document.pdf
 makeIndSty=
-markDer=true
-markTmpDer=true
-outputDir=
-outputFile=RegularExpressions.pdf
-outputFormat=pdf
 srcDir=
+markTmpDer=true
 tempDir=
+outputFormat=pdf
+langSpell=
