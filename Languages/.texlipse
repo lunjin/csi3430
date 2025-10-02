@@ -1,8 +1,8 @@
 #TeXlipse project settings
-#Tue Sep 30 21:42:59 EDT 2025
+#Wed Oct 01 10:21:00 EDT 2025
 outputDir=
 markDer=true
-mainTexFile=F2025-test01.tex
+mainTexFile=FiniteStateAutomata.tex
 bibrefDir=
 builderNum=2
 outputFile=document.pdf

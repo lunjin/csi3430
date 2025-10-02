@@ -389,4 +389,101 @@ Given a GTG M, the algorithm works as follows.
 
 \end{frame}
 
+\begin{frame}{Moore Machines} 
+A Moore machine is a deterministic finite automaton with output. 
+Each state emits an output symbol (or nothing) whenever it is entered. 
+A Moore machine is deterministic and it has no $\Lambda$ transitions. 
+It has no final states as it is a transducer. 
+\end{frame}
+
+\begin{frame}{Example Moore Machine}
+\begin{center}
+\resizebox{.7\textwidth}{!}{
+\begin{tikzpicture}[>={Stealth[width=6pt,length=9pt]}, accepting/.style={double distance = 2pt, outer sep = 1pt + \pgflinewidth}, shorten >=1pt, auto]
+  \draw (100.0pt, -120.0pt)node[state, initial, initial text =](0){$q_{0}/0$};
+  \draw (250.0pt, -50.0pt)node[state](1){$q_{1}/1$};
+  \draw (400.0pt, -120.0pt)node[state](2){$q_{2}/2$};
+  \path[->] (0) edge[loop above] node{0}(0);
+  \path[->] (1) edge[loop above] node{0}(1);
+  \path[->] (2) edge[loop above] node{0}(2);
+  \path[->] (0) edge node{1}(1);
+  \path[->] (2) edge node{1}(0);
+  \path[->] (1) edge node{1}(2);
+\end{tikzpicture}
+}
+\end{center}
+\end{frame}
+
+\begin{frame}{Moore Machine}
+A Moore is a 5-tuple $\langle Q, \Sigma, \Gamma, q_0, \delta,\rho$ where
+\begin{itemize}
+  \item Q is a finite set of states,
+  \item $\Sigma$ is a finite set of input symbols,
+  \item $\Gamma$ is a finite set of output symbols,
+  \item $q_0\in Q$ is  the initial state,
+  \item $\delta:Q\times \Sigma\mapsto Q$ is  the transition function,
+  \item $\rho: Q \mapsto\Gamma\cup\{\Lambda\}$ is the output function. 
+\end{itemize}
+Note that $\delta$ is a total function,
+meaning that behavior of the machine is defined
+for all possible input strings. 
+\end{frame}
+
+\begin{frame}{Meely Machines}
+A Meely machine outputs a symbol (or nothing) when it transitions from one state to another. 
+It is a deterministic in that its transition function maps 
+a pair consisting of a state and an input symbol to a pair consisting of a state and an output symbol (or nothing).  
+\end{frame}
+
+\begin{frame}{Example Meely Machine}
+\begin{center}
+\resizebox{.7\textwidth}{!}{%
+\begin{tikzpicture}[>={Stealth[width=6pt,length=9pt]}, accepting/.style={double distance = 2pt, outer sep = 1pt + \pgflinewidth}, shorten >=1pt, auto]
+  \draw (100.0pt, -120.0pt)node[state, initial, initial text =](0){$q_{0}$};
+  \draw (250.0pt, -50.0pt)node[state](1){$q_{1}$};
+  \draw (400.0pt, -120.0pt)node[state](2){$q_{2}$};
+  \path[->] (0) edge[loop above] node{0}(0);
+  \path[->] (1) edge[loop above] node{0}(1);
+  \path[->] (2) edge[loop above] node{0}(2);
+  \path[->] (0) edge node{1/1}(1);
+  \path[->] (1) edge node{1/2}(2);
+  \path[->] (2) edge node{1/0}(0);
+\end{tikzpicture}
+}%
+\end{center}
+\end{frame}
+
+
+\begin{frame}{Meely Machine}
+A Moore is a 5-tuple $\langle Q, \Sigma, \Gamma, q_0, \delta, \rho$ where
+\begin{itemize}
+  \item Q is a finite set of states,
+  \item $\Sigma$ is a finite set of input symbols,
+  \item $\Gamma$ is a finite set of output symbols,
+  \item $q_0\in Q$ is  the initial state,
+  \item $\delta:Q\times \Sigma\mapsto Q$ is the transition function, and 
+  \item $\rho:Q\times\Sigma\mapsto (\Gamma\cup\{\Lambda\})$ is  the output function.
+\end{itemize}
+Note that $\delta$ is a total function,
+meaning that behavior of the machine is defined
+for all possible input strings. 
+\end{frame}
+
+\begin{frame}{Meely = Moore}
+Moore and Meely machines are equivalent barring the first output symbol of the Moore machine. 
+\end{frame}
+
+\begin{frame}{From Moore machines to Meely machines} 
+Push the output symbol associated with a state to all incoming transitions of the state.  
+
+\end{frame}
+
+
+\begin{frame}{From Meely Machines to Moore machines}
+Push the output symbol associated with a transiton into the target state 
+and split the target state into multiple states 
+- one for each output symbol pushed into it. 
+
+\end{frame}
+
 \end{document}
