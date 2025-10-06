@@ -415,7 +415,7 @@ It has no final states as it is a transducer.
 \end{frame}
 
 \begin{frame}{Moore Machine}
-A Moore is a 5-tuple $\langle Q, \Sigma, \Gamma, q_0, \delta,\rho$ where
+A Moore is a 6-tuple $\langle Q, \Sigma, \Gamma, q_0, \delta,\rho\rangle$ where
 \begin{itemize}
   \item Q is a finite set of states,
   \item $\Sigma$ is a finite set of input symbols,
@@ -455,30 +455,30 @@ a pair consisting of a state and an input symbol to a pair consisting of a state
 
 \begin{frame}{Example Meely Machine}
 \begin{center}
-\resizebox{.7\textwidth}{!}{%
+\resizebox{.8\textwidth}{!}{%
 \begin{tikzpicture}[>={Stealth[width=6pt,length=9pt]}, accepting/.style={double distance = 2pt, outer sep = 1pt + \pgflinewidth}, shorten >=1pt, auto]
   \draw (50.0pt, -75.0pt)node[state, initial, initial text =](0){$s_{0}$};
   \draw (300.0pt, -75.0pt)node[state](1){$s_{5}$};
   \draw (300.0pt, -300.0pt)node[state](2){$s_{10}$};
   \draw (550.0pt, -75.0pt)node[state](3){$s_{15}$};
   \draw (550.0pt, -300.0pt)node[state](4){$s_{20}$};
-  \path[->] (1) edge node{10c}(3);
-  \path[->] (0) edge node{5c}(1);
+  \path[->] (1) edge node{10c/$\lambda$}(3);
+  \path[->] (0) edge node{5c/$\lambda$}(1);
   \path[->] (4) edge[bend left=60] node{5c/coffee}(0);
   \path[->] (3) edge[bend right] node{10c/coffee}(0);
-  \path[->] (2) edge node{10c}(4);
-  \path[->] (1) edge node{5c}(2);
+  \path[->] (2) edge node{10c/$\lambda$}(4);
+  \path[->] (1) edge node{5c/$\lambda$}(2);
   \path[->] (4) edge[bend right] node[near start, above]{10c/coffee}(1);
-  \path[->] (2) edge node{5c}(3);
-  \path[->] (0) edge node{10c}(2);
-  \path[->] (3) edge node{5c}(4);
+  \path[->] (2) edge node{5c/$\lambda$}(3);
+  \path[->] (0) edge node{10c/$\lambda$}(2);
+  \path[->] (3) edge node{5c/$\lambda$}(4);
 \end{tikzpicture}
 }%
 \end{center}
 \end{frame}
 
 \begin{frame}{Meely Machine}
-A Moore is a 5-tuple $\langle Q, \Sigma, \Gamma, q_0, \delta, \rho$ where
+A Meely Machine is a 6-tuple $\langle Q, \Sigma, \Gamma, q_0, \delta, \rho\rangle$ where
 \begin{itemize}
   \item Q is a finite set of states,
   \item $\Sigma$ is a finite set of input symbols,
@@ -502,11 +502,62 @@ Push the output symbol associated with a state to all incoming transitions of th
 \end{frame}
 
 
-\begin{frame}{From Meely Machines to Moore machines}
+\begin{frame}{From Meely Machines to Moore Machines}
 Push the output symbol associated with a transiton into the target state 
 and split the target state into multiple states 
 - one for each output symbol pushed into it. 
 
+\end{frame}
+
+\begin{frame}{From Meely Machines to Moore Machines}
+Let $M_e= \langle Q, \Sigma, \Gamma, q_i, \delta, \rho\rangle$ be a Meely Machine. 
+Define
+\[O_{me}(q) =\left\{\begin{array}{ll}
+ \{ b\mid \exists p\in Q.\exists a\in\Sigma. p\longrightarrow^{a/b} q  \} \cup\{\Lambda\} & \mbox{if $q=q_i$} \\
+   \{ b\mid \exists p\in Q.\exists a\in\Sigma. p\longrightarrow^{a/b} q  \} & \mbox{otherwise} 
+ \end{array}\right.
+ \]
+Then $O_{me}(q)$ is the set of all the possible symbols
+ emitted by $M_e$ on incoming transitions of $q$.  Construct a Moore machine $M_o=Q^{mo}, \Sigma, \Gamma, q_i^{mo}, \delta^{mo}, \rho^{mo}\rangle$ where
+ $Q^{mo} = \bigcup_{q\in M_e} \{q\}\times O_{me}(q)$, $q_i^{mo}= \langle q_i,\Lambda\rangle$, 
+ $\delta^{mo}(\langle q,\gamma\rangle, a) =\langle \delta(q,a), \rho(q,a)\rangle$ and 
+ $\rho^{mo}(\langle q,\gamma\rangle) = \gamma$. \mbox{\bf It remains to show that }  
+\end{frame}
+
+\begin{frame}{Example}
+\begin{center}
+\resizebox{.8\textwidth}{!}{%
+\begin{tikzpicture}[>={Stealth[width=6pt,length=9pt]}, accepting/.style={double distance = 2pt, outer sep = 1pt + \pgflinewidth}, shorten >=1pt, auto]
+  \draw (50.0pt, -75.0pt)node[state, initial, initial text =](0){$s_{0}$};
+  \draw (300.0pt, -75.0pt)node[state](1){$s_{5}$};
+  \draw (300.0pt, -300.0pt)node[state](2){$s_{10}$};
+  \draw (550.0pt, -75.0pt)node[state](3){$s_{15}$};
+  \draw (550.0pt, -300.0pt)node[state](4){$s_{20}$};
+  \path[->] (1) edge node{10c/$\lambda$}(3);
+  \path[->] (0) edge node{5c/$\lambda$}(1);
+  \path[->] (4) edge[bend left=60] node{5c/coffee}(0);
+  \path[->] (3) edge[bend right] node{10c/coffee}(0);
+  \path[->] (2) edge node{10c/$\lambda$}(4);
+  \path[->] (1) edge node{5c/$\lambda$}(2);
+  \path[->] (4) edge[bend right] node[near start, above]{10c/coffee}(1);
+  \path[->] (2) edge node{5c/$\lambda$}(3);
+  \path[->] (0) edge node{10c/$\lambda$}(2);
+  \path[->] (3) edge node{5c/$\lambda$}(4);
+\end{tikzpicture}
+}%
+\end{center}
+
+\begin{overlayarea}{\textwidth}{2cm}
+\only<1>{State $s_{10}$ has two incoming transitions with the same output, so it needn't be split. 
+Likewise, states $s_{15}$ and $s_{20}$ needn't be split.}
+\only<2>{
+State $s_{5}$ has two incoming transitions with different outputs $\lambda$ and $coffee$, it is split into 
+$s_{5}/\lambda$ and $s_{5}/coffee$.}
+\only<3>{The initial state $s_{0}$ has an incoming transition with output $coffee$. 
+This initiation event is viewed as an incoming transition with output $\lambda$. So, it is split into 
+$s_{0}/\lambda$ and $s_{0}/coffee$.
+}
+\end{overlayarea}
 \end{frame}
 
 \end{document}
