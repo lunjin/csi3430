@@ -1,0 +1,211 @@
+\documentclass{beamer}
+
+\usepackage{wasysym}
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning,arrows.meta}
+%\usepackage[graphics,tightpage,active,pdftex]{preview}
+%\setlength{\PreviewBorder}{5pt}
+%\PreviewEnvironment{tikzpicture}
+
+\usepackage[linguistics]{forest}
+\usepackage[many]{tcolorbox}
+\usepackage{comment}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{prooftree}
+
+\newif\ifframeinlbf
+\frameinlbftrue
+\makeatletter
+\newcommand\listofframes{\@starttoc{lbf}}
+\makeatother
+
+\addtobeamertemplate{frametitle}{}{%
+    \ifframeinlbf%
+         \addtocontents{lbf}{%
+            \protect\makebox[2em][l]{%
+                \protect\usebeamercolor[fg]{structure}\insertframenumber\hfill%
+            }%
+            \protect\hyperlink{page.\insertpagenumber}\insertframetitle\par%
+        }%
+   \else\fi%
+}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\newcommand{\myalert}[2]{%
+    \tikz\node[coordinate](t#1){};\alert<#1>{#2}
+}
+
+
+\newcommand{\myexplain}[3]
+{\begin{tcolorbox}
+    [   tikznode boxed title,
+        enhanced,
+        arc=0mm,
+        interior style={white},
+        attach boxed title to top center= {yshift=-\tcboxedtitleheight/2},
+        fonttitle=\bfseries,
+        colbacktitle=white,coltitle=red,
+        boxed title style={size=small,colframe=red,boxrule=0pt},
+        title={\tikz\node[coordinate](s#1) {};#2}]
+#3
+\end{tcolorbox}
+\begin{tikzpicture}[overlay]
+\path<#1>[->, thick] (s#1) edge [bend left] (t#1);
+\end{tikzpicture}
+}
+
+\newcommand{\explain}[2]
+{\begin{tcolorbox}
+    [   tikznode boxed title,
+        enhanced,
+        arc=0mm,
+        interior style={white},
+        attach boxed title to top center= {yshift=-\tcboxedtitleheight/2},
+        fonttitle=\bfseries,
+        colbacktitle=white,coltitle=red,
+        boxed title style={size=small,colframe=red,boxrule=0pt},
+        title={#1}]
+#2
+\end{tcolorbox}
+}
+
+\def\point{\begin{tikzpicture}
+\fill[orange] (0,0) circle (2pt);
+\end{tikzpicture}}
+
+\setbeamertemplate{navigation symbols}{} %Remove navigation bar
+
+\tikzstyle{every picture}+=[remember picture]
+
+\usepackage{color}
+\newcommand{\vet}[1]{\foreach \num in {#1}{\el{\num}}}
+\newcommand{\el}[1]{\fbox{\parbox[c][2ex][c]{1.1em}{#1}}}
+\newcommand{\id}[1]{\parbox[r][2ex][b]{1.7em}{\raggedleft #1}}
+\newcommand{\bl}{\color{blue}}
+\newcommand{\gr}{\color{gray}}
+\newcommand{\re}{\color{red}}
+
+\title{Regular and Non-Regular Languages and Decidability}
+\author{Lunjin Lu}
+\date{}
+
+
+\begin{document}
+\begin{comment}
+\end{comment}
+\frameinlbffalse
+\begin{frame}[fragile,t,allowframebreaks]{List of Frames}
+    \listofframes
+\end{frame}
+\frameinlbftrue
+
+
+\frame{ \titlepage
+}
+
+\begin{frame}{Regular Langauges} 
+\begin{theorem} 
+The collection of regular langauges is closed under 
+\begin{itemize} \small
+  \item [1.] set union
+  \item [2.] concatenation
+  \item [3.] Kleene closure
+  \item [4.] complement 
+  \item [5.] set intersection
+  \item [6.] set complement
+\end{itemize}
+
+\begin{proof}
+(1), (2) and (3) follow from Kleene's theorem. Let $L$ be a regular langauge. 
+There is a DFA $M=\langle Q,\Sigma,\delta,q_i, F\rangle$ such that $L=L(M)$. 
+$\bar{M}=\langle Q,\Sigma,\delta,q_i, Q\setminus F\rangle$. Then 
+$w\in L(\bar{M})$ iff $w\not\in L(M)$ implying $L(\bar{M})=\Sigma^*-L=\bar{L}$. 
+Therefore, $\bar{L}$ is a regular language. Note that $L_1-L_2=L_1\cap \bar{L_2}$ and that (6) follows from (4) and (5). 
+It remains to prove (5), which is done by constructing an accepting  automation for $L_1\cap L_2$ from accepting automations for   
+$L_1$ and $L_2$. 
+\end{proof}
+\end{theorem}
+\end{frame}
+
+\begin{frame}{Non-regular Langauges}
+There are many langauges that are not regular, including the following langauges over the alphabet $\Sigma=\{0,1\}$
+\begin{itemize}
+  \item $\{0^n 1^n\mid n\geq 0\}$;
+  \item EQUAL
+  \item PRIME
+  \item PALINDROME
+  \item SQUARE
+  \item MOREONES
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Pumping Lemma}
+
+\end{frame}
+
+\begin{frame}{$\{0^n 1^n\mid n\geq 0\}$}
+
+\end{frame}
+
+
+\begin{frame}{EQUAL}
+
+\end{frame}
+
+
+\begin{frame}{PRIME}
+
+\end{frame}
+
+
+\begin{frame}{PALINDROME}
+
+\end{frame}
+
+
+\begin{frame}{SQUARE}
+
+\end{frame}
+
+
+\begin{frame}{MOREONES}
+
+\end{frame}
+
+\begin{frame}{Decidability}
+An yes/no problem is solvable if there is an algorithm that provides 
+a definitive answer the problem in a finite number of steps. 
+\end{frame}
+
+\begin{frame}{Decidability problems of Regular Langauges}
+Some decifality questions about regular langagues are 
+\begin{itemize}
+  \item Are two FAs accepting the same languages?
+  \item Are two regular expressionn equivalent?
+  \item is the langauge of an FA empty?
+  \item Is the langauges of an FA finite? 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Emptiness} 
+\begin{theorem}
+
+\end{theorem}
+\end{frame}
+
+\begin{frame}{Finiteness}
+
+\end{frame}
+
+\end{document}

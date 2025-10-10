@@ -1,0 +1,412 @@
+\documentclass{beamer}
+
+%\documentclass[pdf,slideColor,colorBG]{powerdot}
+\hypersetup{colorlinks=true,linkcolor=yellow}
+%\institution{}
+%\subtitle{}
+%\slideCaption{Syntax}
+
+\usepackage{forest}
+\setbeamertemplate{navigation symbols}{} %Remove navigation bar
+\tikzset{
+    invisible/.style={opacity=0,text opacity=0},
+    visible on/.style={alt=#1{}{invisible}},
+    alt/.code args={<#1>#2#3}{%
+      \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+    },
+  transparent/.style={opacity=0.1,text opacity=0.1},
+  opaque on/.style={alt=#1{}{transparent}},
+  alerted/.style={color=alerted text.fg},
+  alert on/.style={alt=#1{alerted}{}},
+}
+\forestset{%
+  visible on/.style={%
+    for tree={%
+      /tikz/visible on={#1},
+      edge={/tikz/visible on={#1}}}},
+  opaque on/.style={%
+    for tree={%
+      /tikz/opaque on={#1},
+      edge={/tikz/opaque on={#1}}}},
+  alerted on/.style={%
+    for tree={%
+      /tikz/alerted on={#1},
+      edge={/tikz/alerted on={#1}}}},
+}
+
+\usepackage{color}
+\usepackage{tcolorbox}
+
+\usepackage{stmaryrd}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{eepic}
+\usepackage{epic}
+\usepackage{rotating}
+\usepackage{bbm}
+
+%\Logo{\includegraphics{ou.eps}}
+
+\title{\huge\bf Context Free Grammars}
+\date{}
+%\author{Lunjin Lu}
+
+
+
+\usepackage{color}
+
+
+\usepackage{stmaryrd}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{eepic}
+\usepackage{epic}
+\usepackage{rotating}
+\usepackage{bbm}
+
+\newcommand{\nt}[1]{{\langle \mbox{#1}\rangle}}
+\def\pspace{\vspace{\fill}}
+
+\newcommand*{\englishgrammar} {\begin{array}{rcl}
+      \nt{S} &\rightarrow &  \nt{NP} \nt{TV} \nt{NP} . \\
+      \nt{S} &\rightarrow &  \nt{NP} \nt{IV} . \\
+      \nt{NP}  &\rightarrow & \nt{A} \nt{N}\\
+      \nt{A}   &\rightarrow & \textrm{a}\\
+      \nt{A}   &\rightarrow & \textrm{the}\\
+      \nt{N}   &\rightarrow & \textrm{tiger}\\
+      \nt{N}   &\rightarrow & \textrm{dog}\\
+      \nt{N}   &\rightarrow & \textrm{rabbit}\\
+      \nt{TV}   &\rightarrow & \textrm{chases}\\
+      \nt{IV}   &\rightarrow & \textrm{shouts}
+\end{array}}
+
+\newcommand*{\expgrammar}{
+  \begin{array}{rcl}
+\nt{exp} &\rightarrow & \nt{exp} + \nt{exp}\\
+\nt{exp} &\rightarrow & \nt{exp} * \nt{exp}\\
+\nt{exp} &\rightarrow & ( \nt{exp})\\
+\nt{exp} &\rightarrow & \textrm{id}
+  \end{array}}
+
+
+\newcommand*{\javagrammar}{\begin{array}{rcl}
+\nt{var-dec} &\rightarrow& \nt{type-name} \nt{declarator-list}\\
+\nt{type-name} &\rightarrow& \textrm{boolean} ~|~ \textrm{byte} ~|~ \textrm{short} ~|~ 	 \textrm{int} \\
+ && |~ \textrm{long} ~|~ \textrm{char} ~|~ \textrm{float} ~|~ \textrm{double}\\
+\nt{declarator-list} &\rightarrow&  \nt{declarator} ~|~ \nt{declarator} , \nt{declarator-list}\\
+\nt{declarator} &\rightarrow &  id ~|~ id = \nt{exp}
+\end{array}
+}
+
+
+\begin{document}
+\maketitle
+
+
+\begin{frame}{English Grammar in English}
+
+A grammar is a finite mechanism for describing (generating) a language.
+For an instance,
+\begin{itemize}
+\item A sentence consists of a noun phrase followed a transitive verb followed by a noun phrase followed by ``.''; or
+\item It consists of a noun phrase followed by an intransitive verb followed by ".".
+\item A noun phrase is an article followed by a noun.
+\item An article is either the word "a" or the word "the".
+\item The only nouns are  ``tiger'', "dog" and ``rabbit''.
+\item The only transitive verb is "chases".
+\item The only intransitive verb is  ``shouts''.
+\end{itemize}
+
+The generated language include among others the following two sentences.
+
+\hfill A tiger chases  the tiger. \hfill  The tiger chases a rabbit.
+
+\end{frame}
+
+
+
+\begin{frame}{Production rules for English Grammar}
+The English grammar in English can be formalized as a set of formulaes called production rules (or simply productions).
+
+\pspace
+
+\begin{itemize}
+\item A sentence may be formed of   a noun phrase,  a transitive verb,  by a noun phrase and a ``.'' in that order; \pause
+     \[ \nt{S} \rightarrow  \nt{NP} \nt{TV} \nt{NP} .\] \pause
+\item or it may be formed of  a noun phrase, an intransitive verb and a "." in that order. \pause
+     \[  \nt{S} \rightarrow   \nt{NP} \nt{IV} . \]
+\end{itemize}
+
+\pspace
+
+\end{frame}
+
+
+\begin{frame}{Production rules for English Grammar - cont'd}
+
+\pspace
+
+\begin{itemize}
+\item A noun phrase is an article followed by a noun. \pause
+\[\nt{NP} \rightarrow \nt{A}\nt{N}\] \pause
+\item An article is either the word "a" or the word "the". \pause
+\[ \nt{A}   \rightarrow  \textrm{a}
+\]
+\[   \nt{A}   \rightarrow  \textrm{the}
+\] \pause
+\item The only nouns are  ``tiger'', "dog" and ``rabbit''. \pause
+\[ \nt{N}   \rightarrow  \textrm{tiger}
+\]
+\[ \nt{N}   \rightarrow  \textrm{dog}
+\]
+\[\nt{N}   \rightarrow  \textrm{rabbit}
+\]
+\end{itemize}
+
+\pspace
+
+\end{frame}
+
+\begin{frame}{Production rules for English Grammar - cont'd}
+
+\pspace
+
+\begin{itemize}
+\item The only transitive verb is "chases". \pause
+\[ \nt{TV}   \rightarrow  \textrm{chases}
+\]
+\item The only intransitive verb is  ``shouts''. \pause
+\[ \nt{IV}   \rightarrow  \textrm{shouts}
+\]
+\end{itemize}
+
+\pspace
+
+\end{frame}
+
+\begin{frame}{English Grammar - Formalized}
+
+\[\englishgrammar\]
+
+\pspace
+
+\begin{itemize}
+\item Terminals $\Sigma=\{\textrm{a}, \textrm{the}, \textrm{tiger}, \textrm{dog}, \textrm{rabbit}, \textrm{chases}, \textrm{shouts},   .\}$;
+\item Variables $N=\{\nt{S}, \nt{NP}, \nt{A}, \nt{N}, \nt{TV}, \nt{IV}  \}$;
+\item Productions listed above $P$; and
+\item Start symbol $\langle S \rangle$.
+\end{itemize}
+
+
+\end{frame}
+
+\begin{frame}{Parse trees}
+\begin{itemize}
+\item
+The grammar is a set of production rules that say how to build a  parse tree.
+\item You put $\nt{S}$ at the root of the tree. This symbol is the start symbol of the grammar.
+\item
+The production rules say how children can be added to a leaf node in the tree.
+\item
+For instance, the rule \( \nt{S} \rightarrow \nt{NP} \nt{TV} \nt{NP} .
+\) says you can add nodes $\nt{NP}, \nt{V}$, $\nt{NP}$, and "." in that order, as children of $\nt{S}$.
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{A parse tree for \underline{the dog chases the rabbit.}}
+\begin{forest}
+[S, alt=<1>{red}{}
+ [NP, visible on=<2->
+    [A, visible on=<3-> [the, visible on=<4->] ]
+    [N, visible on=<3-> [dog, visible on=<5->] ]
+ ]
+ [TV, visible on=<2->
+    [chases, visible on=<6->]
+ ]
+ [NP, visible on=<2->
+    [A, visible on=<7-> [the, visible on=<8->] ]
+    [N, visible on=<7-> [rabbit, visible on=<9->] ]
+ ]
+ [., visible on=<2->]
+]
+\end{forest} \hfill
+\fbox{\scalebox{0.7}{\(\englishgrammar\)}}
+\end{frame}
+
+\begin{frame}{Grammar for Expressions}
+\[
+\expgrammar
+\]
+
+\hfill
+
+An expression can be the sum of two expressions, or the product of two expressions, or an expression in a pair of  parentheses or it can be an identifier
+
+\end{frame}
+
+\begin{frame} {A parse tree for \textrm{((id+id)*id)}}
+\begin{forest}
+for tree={fit=band},
+[exp
+ [(]
+ [exp, calign with current
+    [exp [(]
+         [exp [exp [id]] [+] [exp [id]]]
+         [)]
+    ]
+    [*, calign with current]
+    [exp [id]]
+ ]
+ [,phantom] [,phantom]
+ [)]
+]
+\end{forest} \hfill
+\fbox{\scalebox{0.8}{\(\expgrammar\)}}
+\end{frame}
+
+\begin{frame} {Context Free Grammar}
+A context free grammar $G$ is a 4-tuple $\langle N, \Sigma, P, S\rangle$ where
+\begin{itemize}
+\item $N$ is a set of non-terminal symbols;
+\item $\Sigma$ is a set of terminal symbols, called tokens in programming langauges
+\item $P$ is a set of production rules of the form $A \rightarrow \beta$ with $A\in N$ and $\beta\in (N\cup\Sigma)^{*}$ being a sequence of non-terminal and terminal symbols; and
+\item $S\in N$. S is called the start symbol of the grammar $G$.
+\end{itemize}
+
+\hfill
+
+Convention - list all production rules. Non-terminals  are those on the left hand sides of production rules. Terminal symbols are those that occur only on the right hand sides. The start symbol is the left hand side of the first production rule.
+\end{frame}
+
+\begin{frame} {Parse tree construction}
+\begin{itemize}
+\item Put the start symbol at the root
+\item
+Add children to every non-terminal using any one of the productions for that non-terminal in the grammar
+\item
+Done when all the leaves are tokens
+\item
+Read off leaves by traversing the tree in depth first and left-to-right manner.
+\end{itemize}
+\end{frame}
+
+\begin{frame} {Exercise}
+Grammar:
+\[ \nt{exp} \rightarrow \nt{exp}  + \nt{exp}  ~|~ \nt{exp}  * \nt{exp}  ~|~ ( \nt{exp}  ) ~|~ id \]
+
+Draw a parse tree for each of the following.
+\begin{itemize}
+\item 		id + id
+\item		id * id + id
+\item		( id + id )
+\item	( id + ( id ) )
+\end{itemize}
+\end{frame}
+
+\begin{frame} {Derivations}
+\begin{itemize}
+\item A grammar rule of the form $A \rightarrow \omega$ defines a derivation (rewriting) step that transforms one string (sentential form) $\alpha A\beta$ to another string $\alpha\omega\beta$.
+\item Terminology: $\alpha\omega\beta$  is derived from $\alpha A\beta$ in one step or $\alpha A\beta$ is rewritten into $\alpha\omega\beta$ in one step
+\item Notation: $\alpha A \beta \Rightarrow \alpha\omega\beta$
+\item Notation: $\alpha \Rightarrow^{*} \beta$ if $\beta$ is derived from $\alpha$  in zero, one or more steps.
+\end{itemize}
+\end{frame}
+
+\begin{frame} {A Derivation}
+\( \begin{array}{rcl}
+    \nt{S} &\Rightarrow&  \nt{NP}\nt{TV}\nt{NP}.\\
+       &\Rightarrow& \nt{A}\nt{N}\nt{TV}\nt{NP}.\\
+       &\Rightarrow&  \textrm{the}~ \nt{N}\nt{TV}\nt{NP}.\\
+       &\Rightarrow&  \textrm{the}~ \nt{N} ~\textrm{chases}~ \nt{NP}.\\
+       &\Rightarrow&  \textrm{the}~\textrm{dog}~\textrm{chases}~ \nt{NP}.\\
+      &\Rightarrow& \textrm{the}~\textrm{dog}~\textrm{chases}~ \nt{A}\nt{N}.\\
+       &\Rightarrow&  \textrm{the}~\textrm{dog}~\textrm{chases}~ \nt{A}~\textrm{rabbit}.\\
+       &\Rightarrow& \textrm{the}~\textrm{dog}~\textrm{chases}~ \textrm{the}~\textrm{rabbit}.
+    \end{array}
+\) \hfill \fbox{\scalebox{0.8}{\(\englishgrammar\)}}
+
+
+
+\begin{itemize}
+\item Sentence \underline{the dog chases the rabbit.} is derived from $\nt{S}$
+\item Sentential form \underline{the $\nt{N}$ chases $\nt{NP}$.} is derived from $\nt{S}$
+\end{itemize}
+\end{frame}
+
+
+\begin{frame} {Leftmost / Rightmost derivation}
+\begin{itemize}
+\item A leftmost (rightmost) derivation is one in which only the leftmost (rightmost) non-terminal symbol in a sentential form is rewritten.
+\item A parse tree may visualize multiple derivations but only one leftmost(rightmost) derivation.
+\end{itemize}
+\end{frame}
+
+\begin{frame} {In-Class Exercise 1}
+\[\begin{array}{rcl}
+      \nt{S} &\rightarrow &  \nt{NP} \nt{TV} \nt{NP} .~|~ \nt{NP} \nt{IV} . \\
+      \nt{NP}  &\rightarrow & \nt{A} \nt{N}\\
+      \nt{A}   &\rightarrow & \textrm{a}~|~\textrm{the}\\
+      \nt{N}   &\rightarrow & \textrm{tiger}~|~\textrm{dog}~|~\textrm{rabbit}\\
+      \nt{TV}   &\rightarrow & \textrm{chases}\\
+      \nt{IV}   &\rightarrow & \textrm{shouts}
+\end{array}\]
+
+\vfill
+
+\begin{itemize}
+\item  Draw a parse tree for this sentence: \underline{a tiger chases the rabbit .} ;
+\item Write the leftmost derivation of the same sentence from $\nt{S}$;
+\item Write the rightmost derivation of the same sentence from $\nt{S}$;
+\item Show that \underline{$\nt{NP}\nt{TV}$ the rabbit .} is a sentential form.
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame} {Language of a CFG}
+Let $G=\langle N, \Sigma, P, S\rangle$ be a CFG. The language of $G$, denoted $L(G)$, is defined
+\[
+ L(G) = \{ w \mid w\in\Sigma^{*} \wedge S\Rightarrow^{*} w\}
+\]
+\hfill
+
+$L(G)$ is typically an infinite set of strings. $G$ is a finite representation of $L(G)$.
+\end{frame}
+
+\begin{frame}{Writing Grammars} 
+Let $\Sigma=\{a,b\}$. Write CFGs for the following langauges.
+\begin{itemize}
+  \item EVEN-EVEN
+  \item $\{ a^nb^n\mid n\geq 0\}$
+  \item EQUAL
+  \item PALINGDROME
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Ambiguity} 
+A CFG is ambiguous if there exists some sentence for which there are  two or more parse trees. 
+The grammar for expressions is ambiguous since two parse trees can be constructed for id + id * id.  
+
+\end{frame}
+
+\begin{frame}{Two parse trees for \textrm{id + id * id}}
+\begin{forest}
+[ exp
+  [exp [id]]
+  [+]
+  [exp [exp [id]][*][exp [id]]]
+]
+\end{forest} ~\hfill~
+\begin{forest}
+[ exp   [exp [exp [id]][+][exp [id]]]
+        [*]
+        [exp [id]]
+]
+\end{forest}
+\end{frame}
+
+\end{document} 
