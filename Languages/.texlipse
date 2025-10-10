@@ -1,8 +1,8 @@
 #TeXlipse project settings
-#Wed Oct 01 10:21:00 EDT 2025
+#Fri Oct 10 13:02:19 EDT 2025
 outputDir=
 markDer=true
-mainTexFile=FiniteStateAutomata.tex
+mainTexFile=ContextFreeGrammars.tex
 bibrefDir=
 builderNum=2
 outputFile=document.pdf
