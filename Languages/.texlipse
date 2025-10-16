@@ -1,8 +1,8 @@
 #TeXlipse project settings
-#Fri Oct 10 13:02:19 EDT 2025
+#Wed Oct 15 09:41:06 EDT 2025
 outputDir=
 markDer=true
-mainTexFile=ContextFreeGrammars.tex
+mainTexFile=GrammaticalFormat.tex
 bibrefDir=
 builderNum=2
 outputFile=document.pdf
