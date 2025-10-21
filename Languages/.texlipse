@@ -1,8 +1,8 @@
 #TeXlipse project settings
-#Wed Oct 15 09:41:06 EDT 2025
+#Mon Oct 20 13:19:09 EDT 2025
 outputDir=
 markDer=true
-mainTexFile=GrammaticalFormat.tex
+mainTexFile=Kobus.tex
 bibrefDir=
 builderNum=2
 outputFile=document.pdf

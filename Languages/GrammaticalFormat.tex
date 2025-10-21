@@ -1,0 +1,139 @@
+\documentclass{beamer}
+
+%\documentclass[pdf,slideColor,colorBG]{powerdot}
+\hypersetup{colorlinks=true,linkcolor=yellow}
+%\institution{}
+%\subtitle{}
+%\slideCaption{Syntax}
+
+\usepackage{forest}
+\setbeamertemplate{navigation symbols}{} %Remove navigation bar
+\tikzset{
+    invisible/.style={opacity=0,text opacity=0},
+    visible on/.style={alt=#1{}{invisible}},
+    alt/.code args={<#1>#2#3}{%
+      \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+    },
+  transparent/.style={opacity=0.1,text opacity=0.1},
+  opaque on/.style={alt=#1{}{transparent}},
+  alerted/.style={color=alerted text.fg},
+  alert on/.style={alt=#1{alerted}{}},
+}
+\forestset{%
+  visible on/.style={%
+    for tree={%
+      /tikz/visible on={#1},
+      edge={/tikz/visible on={#1}}}},
+  opaque on/.style={%
+    for tree={%
+      /tikz/opaque on={#1},
+      edge={/tikz/opaque on={#1}}}},
+  alerted on/.style={%
+    for tree={%
+      /tikz/alerted on={#1},
+      edge={/tikz/alerted on={#1}}}},
+}
+
+\usepackage{color}
+\usepackage{tcolorbox}
+
+\usepackage{stmaryrd}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{eepic}
+\usepackage{epic}
+\usepackage{rotating}
+\usepackage{bbm}
+
+%\Logo{\includegraphics{ou.eps}}
+
+
+
+
+\usepackage{color}
+
+
+\usepackage{stmaryrd}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{eepic}
+\usepackage{epic}
+\usepackage{rotating}
+\usepackage{bbm}
+
+\newcommand{\nt}[1]{{\langle \mbox{#1}\rangle}}
+\def\pspace{\vspace{\fill}}
+
+\newcommand*{\englishgrammar} {\begin{array}{rcl}
+      \nt{S} &\rightarrow &  \nt{NP} \nt{TV} \nt{NP} . \\
+      \nt{S} &\rightarrow &  \nt{NP} \nt{IV} . \\
+      \nt{NP}  &\rightarrow & \nt{A} \nt{N}\\
+      \nt{A}   &\rightarrow & \textrm{a}\\
+      \nt{A}   &\rightarrow & \textrm{the}\\
+      \nt{N}   &\rightarrow & \textrm{tiger}\\
+      \nt{N}   &\rightarrow & \textrm{dog}\\
+      \nt{N}   &\rightarrow & \textrm{rabbit}\\
+      \nt{TV}   &\rightarrow & \textrm{chases}\\
+      \nt{IV}   &\rightarrow & \textrm{shouts}
+\end{array}}
+
+\newcommand*{\expgrammar}{
+  \begin{array}{rcl}
+\nt{exp} &\rightarrow & \nt{exp} + \nt{exp}\\
+\nt{exp} &\rightarrow & \nt{exp} * \nt{exp}\\
+\nt{exp} &\rightarrow & ( \nt{exp})\\
+\nt{exp} &\rightarrow & \textrm{id}
+  \end{array}}
+
+
+\newcommand*{\javagrammar}{\begin{array}{rcl}
+\nt{var-dec} &\rightarrow& \nt{type-name} \nt{declarator-list}\\
+\nt{type-name} &\rightarrow& \textrm{boolean} ~|~ \textrm{byte} ~|~ \textrm{short} ~|~ 	 \textrm{int} \\
+ && |~ \textrm{long} ~|~ \textrm{char} ~|~ \textrm{float} ~|~ \textrm{double}\\
+\nt{declarator-list} &\rightarrow&  \nt{declarator} ~|~ \nt{declarator} , \nt{declarator-list}\\
+\nt{declarator} &\rightarrow &  id ~|~ id = \nt{exp}
+\end{array}
+}
+
+\title{\huge\bf Context Free Grammars}
+\date{}
+%\author{Lunjin Lu}
+
+
+\begin{document}
+\maketitle
+
+\begin{frame}[allowframebreaks]{Regular Languages are Context Free}
+\begin{theorem} For any DFA $M=\langle Q, \Sigma, \delta, q_i, F \rangle$, 
+	there is a CFG $G$ such that $L(G)=L(M)$. 
+\end{theorem} \pause 
+
+\begin{proof} We first construct a CFG $G$ from M and then prove that
+$L(G)=L(M)$.
+The non-terminals of $G$ are states of $M$ and the terminals are symbols in the
+alphabet $\Sigma$ of $M$. The start symbol of $G$ is the initial state $q_i$ of
+$M$. There is a production $p\rightarrow aq$ for each transition 
+$p\xrightarrow{a} q$ of $M$ ($\delta(p,a)=q$). 
+There is a production $q\rightarrow \Lambda$ for each final state $q$ of $M$. Formally, 
+$G=\langle Q,\Sigma, P, q_i\rangle$ where 
+\[ P =\{ p\rightarrow aq \in (p\xrightarrow{a} q)\in\delta \}\cup \{ q\rightarrow \Lambda \mid q\in F\} 
+\] 
+We now prove that $\forall w\in \Sigma^*.H(w)$ holds using structural induction where 
+\[ H(w)=\forall p\in Q.\forall q\in Q. ((\bar{\delta}(p, w)=q) \Longleftrightarrow (p\Rightarrow^*_{G} wq))
+\] 
+\begin{itemize}
+  \item Basis. $w=\Lambda$. We have $p=q$ and $H(\Lambda)$ holds vacuously. 
+  \item Induction. Assume $H(w)$ holds for an arbitrary $w$. 
+  	It remains to prove that $H(aw)$ holds for an arbitrary $a\in\Sigma$. 
+  	\begin{itemize}
+  	  \item [(If)] 
+  	  \item [ (Only if)] 
+  	\end{itemize}
+\end{itemize}
+\end{proof}
+
+\end{frame}
+
+\end{document}
