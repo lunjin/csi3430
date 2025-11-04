@@ -1,1 +1,13 @@
 \makebox [2em][l]{\usebeamercolor [fg]{structure}3\hfill }\hyperlink {page.3}{Regular Langauges}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}4\hfill }\hyperlink {page.4}{Non-regular Langauges}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}5\hfill }\hyperlink {page.5}{Pumping Lemma}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}6\hfill }\hyperlink {page.6}{$\{0^n 1^n\mid n\geq 0\}$}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}7\hfill }\hyperlink {page.7}{EQUAL}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}8\hfill }\hyperlink {page.8}{PRIME}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}9\hfill }\hyperlink {page.9}{PALINDROME}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}10\hfill }\hyperlink {page.10}{SQUARE}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}11\hfill }\hyperlink {page.11}{MOREONES}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}12\hfill }\hyperlink {page.12}{Decidability}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}13\hfill }\hyperlink {page.13}{Decidability problems of Regular Langauges}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}14\hfill }\hyperlink {page.14}{Emptiness}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}15\hfill }\hyperlink {page.15}{Finiteness}\par 

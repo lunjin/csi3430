@@ -1,14 +1,14 @@
 #TeXlipse project settings
-#Mon Oct 20 13:19:09 EDT 2025
-outputDir=
-markDer=true
-mainTexFile=Kobus.tex
+#Tue Nov 04 11:19:50 EST 2025
 bibrefDir=
 builderNum=2
-outputFile=document.pdf
-makeIndSty=
-srcDir=
-markTmpDer=true
-tempDir=
-outputFormat=pdf
 langSpell=
+mainTexFile=PDA.tex
+makeIndSty=
+markDer=true
+markTmpDer=true
+outputDir=
+outputFile=document.pdf
+outputFormat=pdf
+srcDir=
+tempDir=
