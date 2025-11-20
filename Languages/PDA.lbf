@@ -1,0 +1,5 @@
+\makebox [2em][l]{\usebeamercolor [fg]{structure}3\hfill }\hyperlink {page.3}{$PDA\subseteq CFL$}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}4\hfill }\hyperlink {page.4}{CFG construction}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}5\hfill }\hyperlink {page.5}{PDA $M_1$ for $\{0^n1 \mid n\geq 0\}$}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}6\hfill }\hyperlink {page.6}{CFG constructed from $M_1$}\par 
+\makebox [2em][l]{\usebeamercolor [fg]{structure}7\hfill }\hyperlink {page.7}{ $L(G)=L(M)$}\par 

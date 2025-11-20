@@ -1,0 +1,186 @@
+\documentclass{beamer}
+
+\usepackage{wasysym}
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning,arrows.meta}
+%\usepackage[graphics,tightpage,active,pdftex]{preview}
+%\setlength{\PreviewBorder}{5pt}
+%\PreviewEnvironment{tikzpicture}
+
+\usepackage[linguistics]{forest}
+\usepackage[many]{tcolorbox}
+\usepackage{comment}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{prooftree}
+
+\newif\ifframeinlbf
+\frameinlbftrue
+\makeatletter
+\newcommand\listofframes{\@starttoc{lbf}}
+\makeatother
+
+\addtobeamertemplate{frametitle}{}{%
+    \ifframeinlbf%
+         \addtocontents{lbf}{%
+            \protect\makebox[2em][l]{%
+                \protect\usebeamercolor[fg]{structure}\insertframenumber\hfill%
+            }%
+            \protect\hyperlink{page.\insertpagenumber}\insertframetitle\par%
+        }%
+   \else\fi%
+}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\newcommand{\myalert}[2]{%
+    \tikz\node[coordinate](t#1){};\alert<#1>{#2}
+}
+
+
+\newcommand{\myexplain}[3]
+{\begin{tcolorbox}
+    [   tikznode boxed title,
+        enhanced,
+        arc=0mm,
+        interior style={white},
+        attach boxed title to top center= {yshift=-\tcboxedtitleheight/2},
+        fonttitle=\bfseries,
+        colbacktitle=white,coltitle=red,
+        boxed title style={size=small,colframe=red,boxrule=0pt},
+        title={\tikz\node[coordinate](s#1) {};#2}]
+#3
+\end{tcolorbox}
+\begin{tikzpicture}[overlay]
+\path<#1>[->, thick] (s#1) edge [bend left] (t#1);
+\end{tikzpicture}
+}
+
+\newcommand{\explain}[2]
+{\begin{tcolorbox}
+    [   tikznode boxed title,
+        enhanced,
+        arc=0mm,
+        interior style={white},
+        attach boxed title to top center= {yshift=-\tcboxedtitleheight/2},
+        fonttitle=\bfseries,
+        colbacktitle=white,coltitle=red,
+        boxed title style={size=small,colframe=red,boxrule=0pt},
+        title={#1}]
+#2
+\end{tcolorbox}
+}
+
+\def\point{\begin{tikzpicture}
+\fill[orange] (0,0) circle (2pt);
+\end{tikzpicture}}
+
+\setbeamertemplate{navigation symbols}{} %Remove navigation bar
+
+\tikzstyle{every picture}+=[remember picture]
+
+\usepackage{color}
+\newcommand{\vet}[1]{\foreach \num in {#1}{\el{\num}}}
+\newcommand{\el}[1]{\fbox{\parbox[c][2ex][c]{1.1em}{#1}}}
+\newcommand{\id}[1]{\parbox[r][2ex][b]{1.7em}{\raggedleft #1}}
+\newcommand{\bl}{\color{blue}}
+\newcommand{\gr}{\color{gray}}
+\newcommand{\re}{\color{red}}
+
+\title{Pushdown Automata}
+\author{Lunjin Lu}
+\date{}
+
+
+\begin{document}
+\begin{comment}
+\end{comment}
+\frameinlbffalse
+\begin{frame}[fragile,t,allowframebreaks]{List of Frames}
+    \listofframes
+\end{frame}
+\frameinlbftrue
+
+
+\frame{ \titlepage
+}
+
+
+\begin{frame}{$PDA\subseteq CFL$}
+\begin{lemma}
+If a PDA M acceptes L then L is a CFL.
+\end{lemma}
+We assume that M satisfies the following properties. 
+\begin{itemize}
+  \item [(a)] It has a single accepting state $q_a$.
+  \item [(b)] It empties the stack before accepting.
+  \item [(c)] Each of its transitions either pushe a sympol or pops a symbol. It never does both or neither. 
+\end{itemize}
+
+Every PDA can be changed to another PDA that satisfies the above properties. 
+\end{frame}
+
+\begin{frame}{CFG construction} 
+Let $M=\langle Q,\Sigma,\Gamma, \delta, q_0, q_a \rangle$. We construct the following CFG.
+\[G=\langle \{A_{p,q}\mid p,q\in Q\}, \Sigma, A_{q_0,q_a}, R\] where R consists of 
+\begin{itemize}
+  \item \(A_{p,q}\rightarrow a A_{r,s} b\)
+       for each $p,q,r,s\in Q$, 
+        $a,b\in\Sigma\cup\{\Lambda\}$ such that 
+        $\delta(p,a,\Lambda)\ni (r,t)$ and 
+        $\delta(s,b,t)\ni (q,\Lambda)$ for $t\in\Gamma$.
+         Note that there is no restriction on $p,q,r,s$ 
+        other than they are states. 
+  \item 
+  \( A_{p,q} \rightarrow A_{p,r}A_{r,q}
+  \) for each $p,q,r\in Q$. 
+  \item  
+   \( A_{q,q} \rightarrow \Lambda
+   \) for each $q\in Q$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{PDA $M_1$ for $\{0^n1 \mid n\geq 0\}$}
+
+\end{frame}
+
+\begin{frame}{CFG constructed from  $M_1$}
+Production rules
+\end{frame}
+
+\begin{frame} { $L(G)=L(M)$}
+The proof for $L(G)=L(M)$ is done by showing  $L(G)\subseteq L(M)$ and 
+$L(M)\subseteq L(G)$ in two separate steps. 
+\begin{lemma}
+$L(G)\subseteq L(M)$. 
+
+It is required to prove that 
+$\langle q_0, w,\lambda\rangle \Longrightarrow^*_M
+    \langle q_a,\lambda,\lambda\rangle$ 
+whenever $A_{q_0,q_a}\Longrightarrow_G^* w$. We prove the following 
+that is stronger than the required. 
+\[\forall p,q,w. ( 
+   [A_{p,q} \Longrightarrow_G^* w] \longrightarrow 
+   [\langle p,w,\lambda\rangle \Longrightarrow_{M}^* 
+    \langle q,\lambda,\lambda\rangle)
+   ] )
+ \] It is equivalent to prove that $\forall n. H(n)$ is true where  
+\[ H(n) = \forall p,q,w. ( 
+   [A_{p,q} \Longrightarrow_G^n w] \longrightarrow 
+   [\langle p,w,\lambda\rangle \Longrightarrow_{M}^* 
+    \langle q,\lambda,\lambda\rangle)
+   ] )
+\] 
+\end{lemma}
+\end{frame}
+
+\end{document}
